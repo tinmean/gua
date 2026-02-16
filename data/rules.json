@@ -20,7 +20,7 @@
     "dui": {
       "key": "dui",
       "name": "兌",
-      "bits": 6,
+      "bits": 3,
       "element": "金",
       "symbol": "☱",
       "lines": [
@@ -44,7 +44,7 @@
     "zhen": {
       "key": "zhen",
       "name": "震",
-      "bits": 4,
+      "bits": 1,
       "element": "木",
       "symbol": "☳",
       "lines": [
@@ -56,7 +56,7 @@
     "xun": {
       "key": "xun",
       "name": "巽",
-      "bits": 3,
+      "bits": 6,
       "element": "木",
       "symbol": "☴",
       "lines": [
@@ -80,7 +80,7 @@
     "gen": {
       "key": "gen",
       "name": "艮",
-      "bits": 1,
+      "bits": 4,
       "element": "土",
       "symbol": "☶",
       "lines": [
@@ -223,7 +223,7 @@
     ],
     "dui": [
       {
-        "id": 57,
+        "id": 58,
         "type": "本宮",
         "shi": 6,
         "ying": 3,
@@ -232,7 +232,7 @@
         "palace_element": "金"
       },
       {
-        "id": 9,
+        "id": 47,
         "type": "一世",
         "shi": 1,
         "ying": 4,
@@ -241,7 +241,7 @@
         "palace_element": "金"
       },
       {
-        "id": 37,
+        "id": 45,
         "type": "二世",
         "shi": 2,
         "ying": 5,
@@ -250,7 +250,7 @@
         "palace_element": "金"
       },
       {
-        "id": 42,
+        "id": 31,
         "type": "三世",
         "shi": 3,
         "ying": 6,
@@ -259,7 +259,7 @@
         "palace_element": "金"
       },
       {
-        "id": 25,
+        "id": 39,
         "type": "四世",
         "shi": 4,
         "ying": 1,
@@ -268,7 +268,7 @@
         "palace_element": "金"
       },
       {
-        "id": 21,
+        "id": 16,
         "type": "五世",
         "shi": 5,
         "ying": 2,
@@ -277,7 +277,7 @@
         "palace_element": "金"
       },
       {
-        "id": 27,
+        "id": 62,
         "type": "遊魂",
         "shi": 4,
         "ying": 1,
@@ -286,7 +286,7 @@
         "palace_element": "金"
       },
       {
-        "id": 18,
+        "id": 54,
         "type": "歸魂",
         "shi": 3,
         "ying": 6,
@@ -371,7 +371,7 @@
     ],
     "zhen": [
       {
-        "id": 52,
+        "id": 51,
         "type": "本宮",
         "shi": 6,
         "ying": 3,
@@ -380,7 +380,7 @@
         "palace_element": "木"
       },
       {
-        "id": 22,
+        "id": 15,
         "type": "一世",
         "shi": 1,
         "ying": 4,
@@ -389,7 +389,7 @@
         "palace_element": "木"
       },
       {
-        "id": 26,
+        "id": 40,
         "type": "二世",
         "shi": 2,
         "ying": 5,
@@ -398,7 +398,7 @@
         "palace_element": "木"
       },
       {
-        "id": 41,
+        "id": 32,
         "type": "三世",
         "shi": 3,
         "ying": 6,
@@ -407,7 +407,7 @@
         "palace_element": "木"
       },
       {
-        "id": 38,
+        "id": 46,
         "type": "四世",
         "shi": 4,
         "ying": 1,
@@ -416,7 +416,7 @@
         "palace_element": "木"
       },
       {
-        "id": 10,
+        "id": 48,
         "type": "五世",
         "shi": 5,
         "ying": 2,
@@ -425,7 +425,7 @@
         "palace_element": "木"
       },
       {
-        "id": 61,
+        "id": 28,
         "type": "遊魂",
         "shi": 4,
         "ying": 1,
@@ -434,7 +434,7 @@
         "palace_element": "木"
       },
       {
-        "id": 53,
+        "id": 17,
         "type": "歸魂",
         "shi": 3,
         "ying": 6,
@@ -445,7 +445,7 @@
     ],
     "xun": [
       {
-        "id": 58,
+        "id": 57,
         "type": "本宮",
         "shi": 6,
         "ying": 3,
@@ -454,7 +454,7 @@
         "palace_element": "木"
       },
       {
-        "id": 47,
+        "id": 9,
         "type": "一世",
         "shi": 1,
         "ying": 4,
@@ -463,7 +463,7 @@
         "palace_element": "木"
       },
       {
-        "id": 45,
+        "id": 37,
         "type": "二世",
         "shi": 2,
         "ying": 5,
@@ -472,7 +472,7 @@
         "palace_element": "木"
       },
       {
-        "id": 31,
+        "id": 42,
         "type": "三世",
         "shi": 3,
         "ying": 6,
@@ -481,7 +481,7 @@
         "palace_element": "木"
       },
       {
-        "id": 39,
+        "id": 25,
         "type": "四世",
         "shi": 4,
         "ying": 1,
@@ -490,7 +490,7 @@
         "palace_element": "木"
       },
       {
-        "id": 16,
+        "id": 21,
         "type": "五世",
         "shi": 5,
         "ying": 2,
@@ -499,7 +499,7 @@
         "palace_element": "木"
       },
       {
-        "id": 62,
+        "id": 27,
         "type": "遊魂",
         "shi": 4,
         "ying": 1,
@@ -508,7 +508,7 @@
         "palace_element": "木"
       },
       {
-        "id": 54,
+        "id": 18,
         "type": "歸魂",
         "shi": 3,
         "ying": 6,
@@ -593,7 +593,7 @@
     ],
     "gen": [
       {
-        "id": 51,
+        "id": 52,
         "type": "本宮",
         "shi": 6,
         "ying": 3,
@@ -602,7 +602,7 @@
         "palace_element": "土"
       },
       {
-        "id": 15,
+        "id": 22,
         "type": "一世",
         "shi": 1,
         "ying": 4,
@@ -611,7 +611,7 @@
         "palace_element": "土"
       },
       {
-        "id": 40,
+        "id": 26,
         "type": "二世",
         "shi": 2,
         "ying": 5,
@@ -620,7 +620,7 @@
         "palace_element": "土"
       },
       {
-        "id": 32,
+        "id": 41,
         "type": "三世",
         "shi": 3,
         "ying": 6,
@@ -629,7 +629,7 @@
         "palace_element": "土"
       },
       {
-        "id": 46,
+        "id": 38,
         "type": "四世",
         "shi": 4,
         "ying": 1,
@@ -638,7 +638,7 @@
         "palace_element": "土"
       },
       {
-        "id": 48,
+        "id": 10,
         "type": "五世",
         "shi": 5,
         "ying": 2,
@@ -647,7 +647,7 @@
         "palace_element": "土"
       },
       {
-        "id": 28,
+        "id": 61,
         "type": "遊魂",
         "shi": 4,
         "ying": 1,
@@ -656,7 +656,7 @@
         "palace_element": "土"
       },
       {
-        "id": 17,
+        "id": 53,
         "type": "歸魂",
         "shi": 3,
         "ying": 6,
@@ -818,18 +818,18 @@
       "type": "一世",
       "shi": 1,
       "ying": 4,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "10": {
       "id": 10,
       "type": "五世",
       "shi": 5,
       "ying": 2,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "11": {
       "id": 11,
@@ -872,36 +872,36 @@
       "type": "一世",
       "shi": 1,
       "ying": 4,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "16": {
       "id": 16,
       "type": "五世",
       "shi": 5,
       "ying": 2,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "17": {
       "id": 17,
       "type": "歸魂",
       "shi": 3,
       "ying": 6,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "18": {
       "id": 18,
       "type": "歸魂",
       "shi": 3,
       "ying": 6,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "19": {
       "id": 19,
@@ -926,18 +926,18 @@
       "type": "五世",
       "shi": 5,
       "ying": 2,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "22": {
       "id": 22,
       "type": "一世",
       "shi": 1,
       "ying": 4,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "23": {
       "id": 23,
@@ -962,36 +962,36 @@
       "type": "四世",
       "shi": 4,
       "ying": 1,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "26": {
       "id": 26,
       "type": "二世",
       "shi": 2,
       "ying": 5,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "27": {
       "id": 27,
       "type": "遊魂",
       "shi": 4,
       "ying": 1,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "28": {
       "id": 28,
       "type": "遊魂",
       "shi": 4,
       "ying": 1,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "29": {
       "id": 29,
@@ -1016,18 +1016,18 @@
       "type": "三世",
       "shi": 3,
       "ying": 6,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "32": {
       "id": 32,
       "type": "三世",
       "shi": 3,
       "ying": 6,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "33": {
       "id": 33,
@@ -1070,54 +1070,54 @@
       "type": "二世",
       "shi": 2,
       "ying": 5,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "38": {
       "id": 38,
       "type": "四世",
       "shi": 4,
       "ying": 1,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "39": {
       "id": 39,
       "type": "四世",
       "shi": 4,
       "ying": 1,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "40": {
       "id": 40,
       "type": "二世",
       "shi": 2,
       "ying": 5,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "41": {
       "id": 41,
       "type": "三世",
       "shi": 3,
       "ying": 6,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "42": {
       "id": 42,
       "type": "三世",
       "shi": 3,
       "ying": 6,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "43": {
       "id": 43,
@@ -1142,36 +1142,36 @@
       "type": "二世",
       "shi": 2,
       "ying": 5,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "46": {
       "id": 46,
       "type": "四世",
       "shi": 4,
       "ying": 1,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "47": {
       "id": 47,
       "type": "一世",
       "shi": 1,
       "ying": 4,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "48": {
       "id": 48,
       "type": "五世",
       "shi": 5,
       "ying": 2,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "49": {
       "id": 49,
@@ -1196,36 +1196,36 @@
       "type": "本宮",
       "shi": 6,
       "ying": 3,
-      "palace": "艮",
-      "palace_key": "gen",
-      "palace_element": "土"
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "52": {
       "id": 52,
       "type": "本宮",
       "shi": 6,
       "ying": 3,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "53": {
       "id": 53,
       "type": "歸魂",
       "shi": 3,
       "ying": 6,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "54": {
       "id": 54,
       "type": "歸魂",
       "shi": 3,
       "ying": 6,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "55": {
       "id": 55,
@@ -1250,18 +1250,18 @@
       "type": "本宮",
       "shi": 6,
       "ying": 3,
-      "palace": "兌",
-      "palace_key": "dui",
-      "palace_element": "金"
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
     },
     "58": {
       "id": 58,
       "type": "本宮",
       "shi": 6,
       "ying": 3,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "59": {
       "id": 59,
@@ -1286,18 +1286,18 @@
       "type": "遊魂",
       "shi": 4,
       "ying": 1,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
     },
     "62": {
       "id": 62,
       "type": "遊魂",
       "shi": 4,
       "ying": 1,
-      "palace": "巽",
-      "palace_key": "xun",
-      "palace_element": "木"
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
     },
     "63": {
       "id": 63,
