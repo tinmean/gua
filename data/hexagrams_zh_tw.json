@@ -1,0 +1,678 @@
+{
+  "trigrams": [
+    {
+      "key": "qian",
+      "name": "乾",
+      "bits": 7,
+      "element": "金",
+      "symbol": "☰",
+      "lines": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "key": "dui",
+      "name": "兌",
+      "bits": 6,
+      "element": "金",
+      "symbol": "☱",
+      "lines": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "key": "li",
+      "name": "離",
+      "bits": 5,
+      "element": "火",
+      "symbol": "☲",
+      "lines": [
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "key": "zhen",
+      "name": "震",
+      "bits": 4,
+      "element": "木",
+      "symbol": "☳",
+      "lines": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "key": "xun",
+      "name": "巽",
+      "bits": 3,
+      "element": "木",
+      "symbol": "☴",
+      "lines": [
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "key": "kan",
+      "name": "坎",
+      "bits": 2,
+      "element": "水",
+      "symbol": "☵",
+      "lines": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "key": "gen",
+      "name": "艮",
+      "bits": 1,
+      "element": "土",
+      "symbol": "☶",
+      "lines": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "key": "kun",
+      "name": "坤",
+      "bits": 0,
+      "element": "土",
+      "symbol": "☷",
+      "lines": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "hexagrams": [
+    {
+      "id": 1,
+      "key": "hex_01",
+      "name": "乾為天",
+      "upper_trigram": "qian",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 2,
+      "key": "hex_02",
+      "name": "坤為地",
+      "upper_trigram": "kun",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 3,
+      "key": "hex_03",
+      "name": "水雷屯",
+      "upper_trigram": "kan",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 4,
+      "key": "hex_04",
+      "name": "山水蒙",
+      "upper_trigram": "zhen",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 5,
+      "key": "hex_05",
+      "name": "水天需",
+      "upper_trigram": "kan",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 6,
+      "key": "hex_06",
+      "name": "天水訟",
+      "upper_trigram": "qian",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 7,
+      "key": "hex_07",
+      "name": "地水師",
+      "upper_trigram": "kun",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 8,
+      "key": "hex_08",
+      "name": "水地比",
+      "upper_trigram": "kan",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 9,
+      "key": "hex_09",
+      "name": "風天小畜",
+      "upper_trigram": "dui",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 10,
+      "key": "hex_10",
+      "name": "天澤履",
+      "upper_trigram": "qian",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 11,
+      "key": "hex_11",
+      "name": "地天泰",
+      "upper_trigram": "kun",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 12,
+      "key": "hex_12",
+      "name": "天地否",
+      "upper_trigram": "qian",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 13,
+      "key": "hex_13",
+      "name": "天火同人",
+      "upper_trigram": "qian",
+      "lower_trigram": "li",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 14,
+      "key": "hex_14",
+      "name": "火天大有",
+      "upper_trigram": "li",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 15,
+      "key": "hex_15",
+      "name": "地山謙",
+      "upper_trigram": "gen",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 16,
+      "key": "hex_16",
+      "name": "雷地豫",
+      "upper_trigram": "kun",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 17,
+      "key": "hex_17",
+      "name": "澤雷隨",
+      "upper_trigram": "xun",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 18,
+      "key": "hex_18",
+      "name": "山風蠱",
+      "upper_trigram": "zhen",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 19,
+      "key": "hex_19",
+      "name": "地澤臨",
+      "upper_trigram": "kun",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 20,
+      "key": "hex_20",
+      "name": "風地觀",
+      "upper_trigram": "dui",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 21,
+      "key": "hex_21",
+      "name": "火雷噬嗑",
+      "upper_trigram": "li",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 22,
+      "key": "hex_22",
+      "name": "山火賁",
+      "upper_trigram": "zhen",
+      "lower_trigram": "li",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 23,
+      "key": "hex_23",
+      "name": "山地剝",
+      "upper_trigram": "zhen",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 24,
+      "key": "hex_24",
+      "name": "地雷復",
+      "upper_trigram": "kun",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 25,
+      "key": "hex_25",
+      "name": "天雷無妄",
+      "upper_trigram": "qian",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 26,
+      "key": "hex_26",
+      "name": "山天大畜",
+      "upper_trigram": "zhen",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 27,
+      "key": "hex_27",
+      "name": "山雷頤",
+      "upper_trigram": "zhen",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 28,
+      "key": "hex_28",
+      "name": "澤風大過",
+      "upper_trigram": "xun",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 29,
+      "key": "hex_29",
+      "name": "坎為水",
+      "upper_trigram": "kan",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 30,
+      "key": "hex_30",
+      "name": "離為火",
+      "upper_trigram": "li",
+      "lower_trigram": "li",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 31,
+      "key": "hex_31",
+      "name": "澤山咸",
+      "upper_trigram": "xun",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 32,
+      "key": "hex_32",
+      "name": "雷風恆",
+      "upper_trigram": "gen",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 33,
+      "key": "hex_33",
+      "name": "天山遯",
+      "upper_trigram": "qian",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 34,
+      "key": "hex_34",
+      "name": "雷天大壯",
+      "upper_trigram": "gen",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 35,
+      "key": "hex_35",
+      "name": "火地晉",
+      "upper_trigram": "li",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 36,
+      "key": "hex_36",
+      "name": "地火明夷",
+      "upper_trigram": "kun",
+      "lower_trigram": "li",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 37,
+      "key": "hex_37",
+      "name": "風火家人",
+      "upper_trigram": "dui",
+      "lower_trigram": "li",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 38,
+      "key": "hex_38",
+      "name": "火澤睽",
+      "upper_trigram": "li",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 39,
+      "key": "hex_39",
+      "name": "水山蹇",
+      "upper_trigram": "kan",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 40,
+      "key": "hex_40",
+      "name": "雷水解",
+      "upper_trigram": "gen",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 41,
+      "key": "hex_41",
+      "name": "山澤損",
+      "upper_trigram": "zhen",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 42,
+      "key": "hex_42",
+      "name": "風雷益",
+      "upper_trigram": "dui",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 43,
+      "key": "hex_43",
+      "name": "澤天夬",
+      "upper_trigram": "xun",
+      "lower_trigram": "qian",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "乾"
+    },
+    {
+      "id": 44,
+      "key": "hex_44",
+      "name": "天風姤",
+      "upper_trigram": "qian",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "乾",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 45,
+      "key": "hex_45",
+      "name": "澤地萃",
+      "upper_trigram": "xun",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "坤"
+    },
+    {
+      "id": 46,
+      "key": "hex_46",
+      "name": "地風升",
+      "upper_trigram": "kun",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 47,
+      "key": "hex_47",
+      "name": "澤水困",
+      "upper_trigram": "xun",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 48,
+      "key": "hex_48",
+      "name": "水風井",
+      "upper_trigram": "kan",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 49,
+      "key": "hex_49",
+      "name": "澤火革",
+      "upper_trigram": "xun",
+      "lower_trigram": "li",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 50,
+      "key": "hex_50",
+      "name": "火風鼎",
+      "upper_trigram": "li",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 51,
+      "key": "hex_51",
+      "name": "震為雷",
+      "upper_trigram": "gen",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "艮"
+    },
+    {
+      "id": 52,
+      "key": "hex_52",
+      "name": "艮為山",
+      "upper_trigram": "zhen",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 53,
+      "key": "hex_53",
+      "name": "風山漸",
+      "upper_trigram": "dui",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 54,
+      "key": "hex_54",
+      "name": "雷澤歸妹",
+      "upper_trigram": "gen",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 55,
+      "key": "hex_55",
+      "name": "雷火豐",
+      "upper_trigram": "gen",
+      "lower_trigram": "li",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 56,
+      "key": "hex_56",
+      "name": "火山旅",
+      "upper_trigram": "li",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 57,
+      "key": "hex_57",
+      "name": "巽為風",
+      "upper_trigram": "dui",
+      "lower_trigram": "dui",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "兌"
+    },
+    {
+      "id": 58,
+      "key": "hex_58",
+      "name": "兌為澤",
+      "upper_trigram": "xun",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "巽",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 59,
+      "key": "hex_59",
+      "name": "風水渙",
+      "upper_trigram": "dui",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "坎"
+    },
+    {
+      "id": 60,
+      "key": "hex_60",
+      "name": "水澤節",
+      "upper_trigram": "kan",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 61,
+      "key": "hex_61",
+      "name": "風澤中孚",
+      "upper_trigram": "dui",
+      "lower_trigram": "xun",
+      "upper_trigram_name": "兌",
+      "lower_trigram_name": "巽"
+    },
+    {
+      "id": 62,
+      "key": "hex_62",
+      "name": "雷山小過",
+      "upper_trigram": "gen",
+      "lower_trigram": "zhen",
+      "upper_trigram_name": "艮",
+      "lower_trigram_name": "震"
+    },
+    {
+      "id": 63,
+      "key": "hex_63",
+      "name": "水火既濟",
+      "upper_trigram": "kan",
+      "lower_trigram": "li",
+      "upper_trigram_name": "坎",
+      "lower_trigram_name": "離"
+    },
+    {
+      "id": 64,
+      "key": "hex_64",
+      "name": "火水未濟",
+      "upper_trigram": "li",
+      "lower_trigram": "kan",
+      "upper_trigram_name": "離",
+      "lower_trigram_name": "坎"
+    }
+  ]
+}

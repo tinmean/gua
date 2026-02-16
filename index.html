@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文王六爻（納甲）排盤</title>
+  <style>
+    :root {
+      --bg: #f4f1e8;
+      --paper: #fffdf7;
+      --ink: #1f2328;
+      --muted: #676d76;
+      --line: #d8d1bf;
+      --accent: #8b4513;
+      --accent-2: #2f6f4f;
+      --danger: #a93d3d;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(51, 39, 20, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(139,69,19,0.11), transparent 36%),
+        radial-gradient(circle at 85% 85%, rgba(47,111,79,0.10), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      line-height: 1.45;
+      padding: 20px;
+    }
+
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: 0.02em;
+    }
+    h2 { margin: 0 0 10px; font-size: 19px; }
+    .muted { color: var(--muted); font-size: 13px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 10px;
+    }
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    label { display: block; font-weight: 600; margin-bottom: 4px; }
+    input, select, button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--ink);
+    }
+    button {
+      background: linear-gradient(180deg, #fffdf5, #f8f2e3);
+      border-color: #c9bda1;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { filter: brightness(0.98); }
+    button.secondary {
+      background: #fff;
+      border-color: #c8d4ce;
+    }
+
+    .coin-grid {
+      display: grid;
+      grid-template-columns: 58px 1fr 1fr 1fr 60px;
+      gap: 6px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .coin-grid strong { color: var(--accent); }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .actions button { width: auto; min-width: 170px; }
+
+    .card {
+      background: #fff;
+      border: 1px solid #d8cfb8;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(75, 58, 32, 0.10);
+      padding: 18px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 16px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .hex-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .hex-box {
+      border: 1px dashed #d5c9a8;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fffef9;
+    }
+    .hex-title { font-weight: 700; margin-bottom: 6px; }
+    .ascii {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre;
+      letter-spacing: 0.04em;
+      color: #3f3115;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border: 1px solid #ddd3bc; padding: 6px 7px; text-align: center; }
+    th { background: #f8f3e7; }
+    td.left { text-align: left; }
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 1px 8px;
+      border: 1px solid #d0c4a4;
+      background: #fff;
+      margin-right: 5px;
+    }
+    .empty { color: var(--danger); font-weight: 700; }
+    .shi { color: #1d5b41; font-weight: 700; }
+    .ying { color: #7b4e00; font-weight: 700; }
+    .guashen { color: #2c5a9f; font-weight: 700; }
+
+    .line-yang, .line-yin {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+    }
+    .line-yang { color: #2b2b2b; }
+    .line-yin { color: #505050; }
+    .moving { color: #b2431f; font-weight: 700; }
+
+    .simple .detail-only { display: none; }
+
+    #devPanel { display: none; }
+    #devPanel.active { display: block; }
+
+    @media (max-width: 980px) {
+      .col-3, .col-4, .col-6, .col-8 { grid-column: span 12; }
+      .hex-grid { grid-template-columns: 1fr; }
+      .coin-grid { grid-template-columns: 52px 1fr 1fr 1fr 52px; }
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .panel:not(.print-keep) { display: none !important; }
+      .card { box-shadow: none; border: 1px solid #999; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel">
+      <h1>文王六爻（納甲）排盤</h1>
+      <div class="muted">純前端靜態版，六爻由下往上。URL hash 可分享：<code>#lines=7,8,9,6,7,8&dt=2026-02-16%2014:30&mode=detail</code></div>
+    </section>
+
+    <section class="panel" id="controls">
+      <h2>起卦輸入</h2>
+      <div class="grid">
+        <div class="col-4">
+          <label for="dtInput">起卦時間（台北，YYYY-MM-DD HH:mm）</label>
+          <input id="dtInput" type="text" placeholder="2026-02-16 14:30" />
+        </div>
+        <div class="col-4">
+          <label for="linesInput">指定六爻（下→上，逗號分隔 6/7/8/9）</label>
+          <input id="linesInput" type="text" placeholder="7,8,9,6,7,8" />
+        </div>
+        <div class="col-2">
+          <label for="displayMode">顯示模式</label>
+          <select id="displayMode">
+            <option value="simple">簡潔模式</option>
+            <option value="detail">詳細模式</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="shenshaBasis">神煞基準</label>
+          <select id="shenshaBasis">
+            <option value="day_branch">日支</option>
+            <option value="year_branch">年支</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <label>銅錢起卦（每爻三枚：頭=3、尾=2；由下到上）</label>
+          <div class="coin-grid">
+            <strong>爻位</strong><strong>第1枚</strong><strong>第2枚</strong><strong>第3枚</strong><strong>合計</strong>
+            <span>1</span><select id="c1_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum1">9</strong>
+            <span>2</span><select id="c2_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum2">9</strong>
+            <span>3</span><select id="c3_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum3">9</strong>
+            <span>4</span><select id="c4_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum4">9</strong>
+            <span>5</span><select id="c5_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum5">9</strong>
+            <span>6</span><select id="c6_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum6">9</strong>
+          </div>
+          <div class="actions">
+            <button id="btnRandomCoins" type="button">隨機擲六爻（銅錢）</button>
+            <button id="btnUseCoins" type="button" class="secondary">將銅錢結果帶入指定六爻</button>
+            <button id="btnNow" type="button" class="secondary">時間設為現在（台北）</button>
+            <button id="btnCalc" type="button">排盤</button>
+            <button id="btnDownload" type="button">下載盤面 PNG</button>
+          </div>
+          <div class="muted" id="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel print-keep">
+      <div class="card" id="card">
+        <div id="result"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="devPanel">
+      <h2>Dev 驗收面板（?dev=1）</h2>
+      <div class="muted">固定 5 組案例，供人工核對：本卦/之卦、世應、卦身、旬空、六獸首位。</div>
+      <div id="devCases"></div>
+    </section>
+  </div>
+
+  <script>
+    const TZ = "Asia/Taipei";
+    const STEMS = "甲乙丙丁戊己庚辛壬癸".split("");
+    const BRANCHES = "子丑寅卯辰巳午未申酉戌亥".split("");
+
+    const state = {
+      data: null,
+      rules: null,
+      mapByBits: new Map(),
+      hexById: new Map(),
+      current: null
+    };
+
+    function pad2(n) { return String(n).padStart(2, "0"); }
+
+    function getTaipeiNowString() {
+      const now = new Date();
+      const parts = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: TZ,
+        year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false
+      }).formatToParts(now);
+      const pick = (type) => parts.find((p) => p.type === type).value;
+      return `${pick("year")}-${pick("month")}-${pick("day")} ${pick("hour")}:${pick("minute")}`;
+    }
+
+    function parseTaipeiDateTime(s) {
+      const m = /^\s*(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})\s*$/.exec(s || "");
+      if (!m) return null;
+      const y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]), h = Number(m[4]), mi = Number(m[5]);
+      if (mo < 1 || mo > 12 || d < 1 || d > 31 || h > 23 || mi > 59) return null;
+      return new Date(Date.UTC(y, mo - 1, d, h - 8, mi, 0));
+    }
+
+    function parseLines(s) {
+      const arr = String(s || "").split(",").map((x) => Number(x.trim()));
+      if (arr.length !== 6) return null;
+      if (arr.some((n) => ![6,7,8,9].includes(n))) return null;
+      return arr;
+    }
+
+    function lineToBit(lineValue) {
+      return (lineValue === 7 || lineValue === 9) ? 1 : 0;
+    }
+
+    function changedLineBit(lineValue) {
+      if (lineValue === 6) return 1;
+      if (lineValue === 9) return 0;
+      return lineToBit(lineValue);
+    }
+
+    function bitsIntFromLines(lines, changed = false) {
+      let n = 0;
+      for (let i = 0; i < 6; i++) {
+        const bit = changed ? changedLineBit(lines[i]) : lineToBit(lines[i]);
+        n |= (bit << i);
+      }
+      return n;
+    }
+
+    function getTrigramFromBits3(bits3) {
+      const meta = state.rules.trigram_meta;
+      return Object.values(meta).find((t) => t.bits === bits3);
+    }
+
+    function getHexMetaByBits(bitsInt) {
+      const id = state.mapByBits.get(bitsInt);
+      const hex = state.hexById.get(id);
+      const lowerBits = bitsInt & 7;
+      const upperBits = (bitsInt >> 3) & 7;
+      return {
+        id,
+        name: hex ? hex.name : `未知(${id || "?"})`,
+        upper: getTrigramFromBits3(upperBits),
+        lower: getTrigramFromBits3(lowerBits)
+      };
+    }
+
+    function formatSolarTaipei(date) {
+      const parts = new Intl.DateTimeFormat("zh-TW", {
+        timeZone: TZ,
+        year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+      }).formatToParts(date);
+      const pick = (type) => parts.find((p) => p.type === type).value;
+      return `${pick("year")}-${pick("month")}-${pick("day")} ${pick("hour")}:${pick("minute")}:${pick("second")}`;
+    }
+
+    function dayGanzhiFallback(dateUtc) {
+      const base = Date.UTC(1984, 1, 2, 0, 0, 0); // 1984-02-02 assumed甲子日
+      const dayMs = 86400000;
+      const days = Math.floor((Date.UTC(dateUtc.getUTCFullYear(), dateUtc.getUTCMonth(), dateUtc.getUTCDate()) - base) / dayMs);
+      const idx = ((days % 60) + 60) % 60;
+      return STEMS[idx % 10] + BRANCHES[idx % 12];
+    }
+
+    function hourBranchByHour(h) {
+      if (h === 23 || h === 0) return "子";
+      return BRANCHES[Math.floor((h + 1) / 2) % 12];
+    }
+
+    function hourGanzhiFromDayStem(dayStem, hourBranch) {
+      const startStemByDayStem = {
+        "甲":"甲", "己":"甲",
+        "乙":"丙", "庚":"丙",
+        "丙":"戊", "辛":"戊",
+        "丁":"庚", "壬":"庚",
+        "戊":"壬", "癸":"壬"
+      };
+      const start = startStemByDayStem[dayStem] || "甲";
+      const startIdx = STEMS.indexOf(start);
+      const branchIdx = BRANCHES.indexOf(hourBranch);
+      const stem = STEMS[(startIdx + branchIdx) % 10];
+      return stem + hourBranch;
+    }
+
+    function getGanzhi(dateUtc) {
+      try {
+        if (window.Solar && window.Solar.fromDate) {
+          const solar = window.Solar.fromDate(dateUtc);
+          const lunar = solar.getLunar();
+          const year = lunar.getYearInGanZhi ? lunar.getYearInGanZhi() : "";
+          const month = lunar.getMonthInGanZhi ? lunar.getMonthInGanZhi() : "";
+          const day = lunar.getDayInGanZhiExact ? lunar.getDayInGanZhiExact() : (lunar.getDayInGanZhi ? lunar.getDayInGanZhi() : "");
+          const time = lunar.getTimeInGanZhi ? lunar.getTimeInGanZhi() : "";
+          if (day && day.length === 2) {
+            return { year, month, day, hour: time || hourGanzhiFromDayStem(day[0], hourBranchByHour(getTaipeiHour(dateUtc))) };
+          }
+        }
+      } catch (err) {
+        console.warn("lunar-javascript fallback", err);
+      }
+
+      const day = dayGanzhiFallback(dateUtc);
+      const dayStem = day[0];
+      const dayBranch = day[1];
+      const y = Number(new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric" }).format(dateUtc));
+      const yearIdx = ((y - 1984) % 60 + 60) % 60;
+      const year = STEMS[yearIdx % 10] + BRANCHES[yearIdx % 12];
+      const month = "";
+      const hBranch = hourBranchByHour(getTaipeiHour(dateUtc));
+      return { year, month, day, hour: hourGanzhiFromDayStem(dayStem, hBranch), _fallback: true, _dayBranch: dayBranch };
+    }
+
+    function getTaipeiHour(dateUtc) {
+      const h = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", hour12: false }).format(dateUtc);
+      return Number(h);
+    }
+
+    function getXunkong(dayGanzhi) {
+      const v = state.rules.xunkong.by_day_ganzhi[dayGanzhi];
+      return v || ["?", "?"];
+    }
+
+    function groupValueByBranch(branch, map) {
+      for (const key of Object.keys(map)) {
+        if (key.includes(branch)) return map[key];
+      }
+      return "?";
+    }
+
+    function computeSixBeasts(dayStem) {
+      const beasts = state.rules.six_beasts.order;
+      const start = state.rules.six_beasts.day_stem_start[dayStem] || "青龍";
+      const startIdx = beasts.indexOf(start);
+      const out = [];
+      for (let i = 0; i < 6; i++) out.push(beasts[(startIdx + i) % beasts.length]);
+      return out; // line1 -> line6
+    }
+
+    function computeNajia(hexMeta) {
+      const tb = state.rules.najia.trigram_branches;
+      const be = state.rules.najia.branch_element;
+      const lower = tb[hexMeta.lower.key];
+      const upper = tb[hexMeta.upper.key];
+      const branches = [...lower.inner, ...upper.outer];
+      return branches.map((br, idx) => ({ line: idx + 1, branch: br, element: be[br] || "?" }));
+    }
+
+    function relationLiuqin(selfEl, otherEl) {
+      const g = state.rules.wuxing.generates;
+      const c = state.rules.wuxing.controls;
+      if (selfEl === otherEl) return "兄弟";
+      if (g[selfEl] === otherEl) return "子孫";
+      if (g[otherEl] === selfEl) return "父母";
+      if (c[selfEl] === otherEl) return "妻財";
+      if (c[otherEl] === selfEl) return "官鬼";
+      return "?";
+    }
+
+    function lineText(bit) {
+      return bit ? "──────" : "──  ──";
+    }
+
+    function buildAscii(bitsInt, lines) {
+      const arr = [];
+      for (let i = 5; i >= 0; i--) {
+        const bit = (bitsInt >> i) & 1;
+        const original = lines ? lines[i] : null;
+        const mov = original === 6 ? " ○" : (original === 9 ? " ×" : "  ");
+        arr.push(`${lineText(bit)}${mov}`);
+      }
+      return arr.join("\n");
+    }
+
+    function calcResult(lines, dateUtc, shenshaBasis) {
+      const mainBits = bitsIntFromLines(lines, false);
+      const chgBits = bitsIntFromLines(lines, true);
+      const mainHex = getHexMetaByBits(mainBits);
+      const chgHex = getHexMetaByBits(chgBits);
+      const moving = [];
+      lines.forEach((v, idx) => {
+        if (v === 6 || v === 9) moving.push({ line: idx + 1, type: v === 6 ? "老陰" : "老陽" });
+      });
+
+      const gz = getGanzhi(dateUtc);
+      const dayStem = gz.day ? gz.day[0] : "";
+      const dayBranch = gz.day ? gz.day[1] : "";
+      const yearBranch = gz.year ? gz.year[1] : "";
+      const xk = getXunkong(gz.day || "");
+
+      const palaceInfo = state.rules.shi_ying_by_hexagram_id[String(mainHex.id)] || state.rules.shi_ying_by_hexagram_id[mainHex.id];
+      const shi = palaceInfo ? palaceInfo.shi : 6;
+      const ying = palaceInfo ? palaceInfo.ying : 3;
+      const palaceElement = palaceInfo ? palaceInfo.palace_element : (mainHex.lower ? mainHex.lower.element : "?");
+
+      const najia = computeNajia(mainHex);
+      const sixBeasts = computeSixBeasts(dayStem);
+
+      const shiBit = (mainBits >> (shi - 1)) & 1;
+      const seq = shiBit ? state.rules.guashen_rule.yang_start_sequence : state.rules.guashen_rule.yin_start_sequence;
+      const guashenBranch = seq[shi - 1];
+      let guashenLine = najia.find((x) => x.branch === guashenBranch)?.line || null;
+      if (!guashenLine) guashenLine = state.rules.guashen_rule.quick_table[guashenBranch] || shi;
+
+      const basisBranch = shenshaBasis === "year_branch" ? yearBranch : dayBranch;
+      const tianyi = state.rules.shensha.tianyi_gui_ren_by_day_stem[dayStem] || [];
+      const yima = groupValueByBranch(basisBranch, state.rules.shensha.yima_by_branch_group);
+      const taohua = groupValueByBranch(basisBranch, state.rules.shensha.taohua_by_branch_group);
+
+      const rows = [];
+      for (let line = 6; line >= 1; line--) {
+        const i = line - 1;
+        const bit = (mainBits >> i) & 1;
+        const movingFlag = lines[i] === 6 || lines[i] === 9;
+        rows.push({
+          line,
+          beast: sixBeasts[i],
+          liuqin: relationLiuqin(palaceElement, najia[i].element),
+          najia: `${najia[i].branch}${najia[i].element}`,
+          shi: line === shi,
+          ying: line === ying,
+          guashen: line === guashenLine,
+          empty: xk.includes(najia[i].branch),
+          lineText: lineText(bit),
+          movingMark: lines[i] === 6 ? "○" : (lines[i] === 9 ? "×" : "")
+        });
+      }
+
+      return {
+        lines, dateUtc,
+        solar: formatSolarTaipei(dateUtc),
+        gz,
+        xunkong: xk,
+        mainHex,
+        chgHex,
+        moving,
+        shi, ying,
+        guashenBranch,
+        guashenLine,
+        sixBeasts,
+        rows,
+        palaceInfo,
+        shensha: { tianyi, yima, taohua, basisBranch, basisMode: shenshaBasis }
+      };
+    }
+
+    function htmlEscape(s) {
+      return String(s).replace(/[&<>"']/g, (ch) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+    }
+
+    function renderResult(res, mode) {
+      const resultEl = document.getElementById("result");
+      const movingText = res.moving.length ? res.moving.map((m) => `第${m.line}爻${m.type}`).join("、") : "無動爻";
+      const pInfo = res.palaceInfo || { palace: "?", type: "?" };
+
+      const rowsHtml = res.rows.map((r) => {
+        const lineClass = r.lineText.includes("  ") ? "line-yin" : "line-yang";
+        return `<tr>
+          <td>${r.line}</td>
+          <td>${r.beast}</td>
+          <td>${r.liuqin}</td>
+          <td>${r.najia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
+          <td>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</td>
+          <td class="${lineClass}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ''}</td>
+        </tr>`;
+      }).join("");
+
+      resultEl.className = mode === "simple" ? "simple" : "";
+      resultEl.innerHTML = `
+        <div class="meta-grid">
+          <div><span class="tag">公曆（台北）</span>${htmlEscape(res.solar)}</div>
+          <div><span class="tag">四柱</span>${htmlEscape(res.gz.year || "?")}年 ${htmlEscape(res.gz.month || "?")}月 ${htmlEscape(res.gz.day || "?")}日 ${htmlEscape(res.gz.hour || "?")}時</div>
+          <div><span class="tag">旬空</span>${res.xunkong.join("、")}</div>
+          <div><span class="tag">神煞（${res.shensha.basisMode === "year_branch" ? "年支" : "日支"}）</span>天乙貴人：${res.shensha.tianyi.join("、") || "?"}；驛馬：${res.shensha.yima}；桃花：${res.shensha.taohua}</div>
+        </div>
+
+        <div class="hex-grid">
+          <div class="hex-box">
+            <div class="hex-title">本卦 #${res.mainHex.id} ${htmlEscape(res.mainHex.name)}</div>
+            <div>上卦：${res.mainHex.upper.name}（${res.mainHex.upper.symbol}） 下卦：${res.mainHex.lower.name}（${res.mainHex.lower.symbol}）</div>
+            <div class="detail-only">八宮：${pInfo.palace}宮 ${pInfo.type}</div>
+            <div class="ascii">${buildAscii(bitsIntFromLines(res.lines, false), res.lines)}</div>
+          </div>
+          <div class="hex-box">
+            <div class="hex-title">之卦 #${res.chgHex.id} ${htmlEscape(res.chgHex.name)}</div>
+            <div>上卦：${res.chgHex.upper.name}（${res.chgHex.upper.symbol}） 下卦：${res.chgHex.lower.name}（${res.chgHex.lower.symbol}）</div>
+            <div class="detail-only">動爻：${movingText}</div>
+            <div class="ascii">${buildAscii(bitsIntFromLines(res.lines, true), null)}</div>
+          </div>
+        </div>
+
+        <div class="detail-only" style="margin-bottom:8px;">
+          <span class="tag">世/應</span>世在第${res.shi}爻，應在第${res.ying}爻
+          <span class="tag">卦身</span>${res.guashenBranch}（第${res.guashenLine}爻）
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>爻位</th>
+              <th>六獸</th>
+              <th>六親</th>
+              <th>納甲</th>
+              <th>世應/卦身</th>
+              <th>陰陽線</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `;
+    }
+
+    function setStatus(msg, isError) {
+      const el = document.getElementById("status");
+      el.textContent = msg || "";
+      el.style.color = isError ? "#a93d3d" : "#4b5a4f";
+    }
+
+    function updateCoinSums() {
+      for (let i = 1; i <= 6; i++) {
+        const a = Number(document.getElementById(`c${i}_1`).value);
+        const b = Number(document.getElementById(`c${i}_2`).value);
+        const c = Number(document.getElementById(`c${i}_3`).value);
+        document.getElementById(`sum${i}`).textContent = String(a + b + c);
+      }
+    }
+
+    function setCoinRandom() {
+      for (let i = 1; i <= 6; i++) {
+        for (let j = 1; j <= 3; j++) {
+          document.getElementById(`c${i}_${j}`).value = Math.random() < 0.5 ? "2" : "3";
+        }
+      }
+      updateCoinSums();
+    }
+
+    function coinSumsToLines() {
+      const lines = [];
+      for (let i = 1; i <= 6; i++) {
+        lines.push(Number(document.getElementById(`sum${i}`).textContent));
+      }
+      return lines;
+    }
+
+    function syncHash(lines, dtText, mode, shenshaBasis) {
+      const hash = new URLSearchParams();
+      hash.set("lines", lines.join(","));
+      hash.set("dt", dtText);
+      hash.set("mode", mode);
+      hash.set("sb", shenshaBasis);
+      location.hash = hash.toString();
+    }
+
+    function readHashToForm() {
+      const raw = location.hash.replace(/^#/, "");
+      const p = new URLSearchParams(raw);
+      const lines = p.get("lines");
+      const dt = p.get("dt");
+      const mode = p.get("mode");
+      const sb = p.get("sb");
+      if (lines) document.getElementById("linesInput").value = lines;
+      if (dt) document.getElementById("dtInput").value = dt;
+      if (mode && ["simple", "detail"].includes(mode)) document.getElementById("displayMode").value = mode;
+      if (sb && ["day_branch", "year_branch"].includes(sb)) document.getElementById("shenshaBasis").value = sb;
+    }
+
+    function runCalc() {
+      const dtText = document.getElementById("dtInput").value.trim();
+      const linesText = document.getElementById("linesInput").value.trim();
+      const mode = document.getElementById("displayMode").value;
+      const shenshaBasis = document.getElementById("shenshaBasis").value;
+
+      const dt = parseTaipeiDateTime(dtText);
+      if (!dt) return setStatus("時間格式錯誤，請使用 YYYY-MM-DD HH:mm", true);
+      const lines = parseLines(linesText);
+      if (!lines) return setStatus("六爻格式錯誤，請輸入 6 個值，且僅可為 6/7/8/9", true);
+
+      const res = calcResult(lines, dt, shenshaBasis);
+      state.current = res;
+      renderResult(res, mode);
+      syncHash(lines, dtText, mode, shenshaBasis);
+      setStatus("排盤完成。", false);
+      renderDevPanel();
+    }
+
+    async function downloadPng() {
+      if (!state.current) return;
+      const card = document.getElementById("card");
+      try {
+        const dataUrl = await htmlToImage.toPng(card, { cacheBust: true, pixelRatio: 2, backgroundColor: "#ffffff" });
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `liuyao_${Date.now()}.png`;
+        a.click();
+        setStatus("PNG 下載完成。", false);
+      } catch (err) {
+        console.error(err);
+        setStatus("PNG 匯出失敗：可改用瀏覽器列印存 PDF，或手動截圖。", true);
+      }
+    }
+
+    function renderDevPanel() {
+      const devOn = new URLSearchParams(location.search).get("dev") === "1";
+      const panel = document.getElementById("devPanel");
+      panel.classList.toggle("active", devOn);
+      if (!devOn) return;
+
+      const cases = [
+        { lines: [7,8,9,6,7,8], dt: "2026-02-16 14:30" },
+        { lines: [6,6,7,9,8,7], dt: "2025-01-03 09:10" },
+        { lines: [9,8,8,7,6,9], dt: "2024-08-08 20:15" },
+        { lines: [8,7,6,8,9,7], dt: "2023-12-21 23:40" },
+        { lines: [7,7,7,8,8,6], dt: "2022-04-01 06:30" }
+      ];
+
+      const rows = cases.map((c, idx) => {
+        const dt = parseTaipeiDateTime(c.dt);
+        const r = calcResult(c.lines, dt, document.getElementById("shenshaBasis").value);
+        return `<tr>
+          <td>${idx + 1}</td>
+          <td><code>${c.lines.join(",")}</code></td>
+          <td>${c.dt}</td>
+          <td>本卦#${r.mainHex.id} / 之卦#${r.chgHex.id}</td>
+          <td>世${r.shi} 應${r.ying}</td>
+          <td>${r.guashenBranch} / 第${r.guashenLine}爻</td>
+          <td>${r.xunkong.join("、")}</td>
+          <td>${r.sixBeasts[0]}</td>
+        </tr>`;
+      }).join("");
+
+      document.getElementById("devCases").innerHTML = `
+        <table>
+          <thead>
+            <tr><th>#</th><th>lines</th><th>datetime</th><th>卦ID</th><th>世應</th><th>卦身</th><th>旬空</th><th>六獸首位</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    async function loadData() {
+      const [hexData, mappingData, rules] = await Promise.all([
+        fetch("./data/hexagrams_zh_tw.json").then((r) => r.json()),
+        fetch("./data/king_wen_mapping.json").then((r) => r.json()),
+        fetch("./data/rules.json").then((r) => r.json())
+      ]);
+      state.data = hexData;
+      state.rules = rules;
+      mappingData.mappings.forEach((m) => state.mapByBits.set(m.bits_int, m.id));
+      hexData.hexagrams.forEach((h) => state.hexById.set(h.id, h));
+    }
+
+    function initEvents() {
+      for (let i = 1; i <= 6; i++) {
+        for (let j = 1; j <= 3; j++) {
+          document.getElementById(`c${i}_${j}`).addEventListener("change", updateCoinSums);
+        }
+      }
+      document.getElementById("btnRandomCoins").addEventListener("click", () => {
+        setCoinRandom();
+        setStatus("已隨機擲銅錢，可按「將銅錢結果帶入指定六爻」。", false);
+      });
+      document.getElementById("btnUseCoins").addEventListener("click", () => {
+        const lines = coinSumsToLines();
+        document.getElementById("linesInput").value = lines.join(",");
+        setStatus("已帶入銅錢結果。", false);
+      });
+      document.getElementById("btnNow").addEventListener("click", () => {
+        document.getElementById("dtInput").value = getTaipeiNowString();
+      });
+      document.getElementById("btnCalc").addEventListener("click", runCalc);
+      document.getElementById("btnDownload").addEventListener("click", downloadPng);
+      document.getElementById("displayMode").addEventListener("change", () => state.current && renderResult(state.current, document.getElementById("displayMode").value));
+      document.getElementById("shenshaBasis").addEventListener("change", () => state.current && runCalc());
+      window.addEventListener("hashchange", () => {
+        readHashToForm();
+        runCalc();
+      });
+    }
+
+    async function boot() {
+      try {
+        await loadData();
+      } catch (err) {
+        console.error(err);
+        setStatus("資料載入失敗，請確認 data/*.json 路徑可存取。", true);
+        return;
+      }
+
+      initEvents();
+      setCoinRandom();
+      updateCoinSums();
+
+      if (!location.hash) {
+        document.getElementById("dtInput").value = getTaipeiNowString();
+        document.getElementById("linesInput").value = "7,8,9,6,7,8";
+      } else {
+        readHashToForm();
+      }
+
+      if (!document.getElementById("dtInput").value) document.getElementById("dtInput").value = getTaipeiNowString();
+      if (!document.getElementById("linesInput").value) document.getElementById("linesInput").value = "7,8,9,6,7,8";
+      runCalc();
+    }
+
+    boot();
+  </script>
+</body>
+</html>

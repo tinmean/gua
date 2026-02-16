@@ -1,0 +1,1912 @@
+{
+  "meta": {
+    "note": "文王六爻（納甲）常見規則預設，可依流派調整。",
+    "line_indexing": "1=初爻(下) ... 6=上爻",
+    "bits_encoding": "bit0=初爻(下), bit5=上爻; 1=陽, 0=陰"
+  },
+  "trigram_meta": {
+    "qian": {
+      "key": "qian",
+      "name": "乾",
+      "bits": 7,
+      "element": "金",
+      "symbol": "☰",
+      "lines": [
+        1,
+        1,
+        1
+      ]
+    },
+    "dui": {
+      "key": "dui",
+      "name": "兌",
+      "bits": 6,
+      "element": "金",
+      "symbol": "☱",
+      "lines": [
+        1,
+        1,
+        0
+      ]
+    },
+    "li": {
+      "key": "li",
+      "name": "離",
+      "bits": 5,
+      "element": "火",
+      "symbol": "☲",
+      "lines": [
+        1,
+        0,
+        1
+      ]
+    },
+    "zhen": {
+      "key": "zhen",
+      "name": "震",
+      "bits": 4,
+      "element": "木",
+      "symbol": "☳",
+      "lines": [
+        1,
+        0,
+        0
+      ]
+    },
+    "xun": {
+      "key": "xun",
+      "name": "巽",
+      "bits": 3,
+      "element": "木",
+      "symbol": "☴",
+      "lines": [
+        0,
+        1,
+        1
+      ]
+    },
+    "kan": {
+      "key": "kan",
+      "name": "坎",
+      "bits": 2,
+      "element": "水",
+      "symbol": "☵",
+      "lines": [
+        0,
+        1,
+        0
+      ]
+    },
+    "gen": {
+      "key": "gen",
+      "name": "艮",
+      "bits": 1,
+      "element": "土",
+      "symbol": "☶",
+      "lines": [
+        0,
+        0,
+        1
+      ]
+    },
+    "kun": {
+      "key": "kun",
+      "name": "坤",
+      "bits": 0,
+      "element": "土",
+      "symbol": "☷",
+      "lines": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "shi_ying_type_table": {
+    "本宮": {
+      "shi": 6,
+      "ying": 3
+    },
+    "一世": {
+      "shi": 1,
+      "ying": 4
+    },
+    "二世": {
+      "shi": 2,
+      "ying": 5
+    },
+    "三世": {
+      "shi": 3,
+      "ying": 6
+    },
+    "四世": {
+      "shi": 4,
+      "ying": 1
+    },
+    "五世": {
+      "shi": 5,
+      "ying": 2
+    },
+    "遊魂": {
+      "shi": 4,
+      "ying": 1
+    },
+    "歸魂": {
+      "shi": 3,
+      "ying": 6
+    }
+  },
+  "palace_type_masks": {
+    "本宮": 0,
+    "一世": 1,
+    "二世": 3,
+    "三世": 7,
+    "四世": 15,
+    "五世": 31,
+    "遊魂": 23,
+    "歸魂": 16
+  },
+  "palace_hex_sequence": {
+    "qian": [
+      {
+        "id": 1,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 44,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 33,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 12,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 20,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 23,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 35,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      },
+      {
+        "id": 14,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "乾",
+        "palace_key": "qian",
+        "palace_element": "金"
+      }
+    ],
+    "dui": [
+      {
+        "id": 57,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 9,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 37,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 42,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 25,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 21,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 27,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      },
+      {
+        "id": 18,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "兌",
+        "palace_key": "dui",
+        "palace_element": "金"
+      }
+    ],
+    "li": [
+      {
+        "id": 30,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 56,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 50,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 64,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 4,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 59,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 6,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      },
+      {
+        "id": 13,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "離",
+        "palace_key": "li",
+        "palace_element": "火"
+      }
+    ],
+    "zhen": [
+      {
+        "id": 52,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 22,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 26,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 41,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 38,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 10,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 61,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      },
+      {
+        "id": 53,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "震",
+        "palace_key": "zhen",
+        "palace_element": "木"
+      }
+    ],
+    "xun": [
+      {
+        "id": 58,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 47,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 45,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 31,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 39,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 16,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 62,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      },
+      {
+        "id": 54,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "巽",
+        "palace_key": "xun",
+        "palace_element": "木"
+      }
+    ],
+    "kan": [
+      {
+        "id": 29,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 60,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 3,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 63,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 49,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 55,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 36,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      },
+      {
+        "id": 7,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "坎",
+        "palace_key": "kan",
+        "palace_element": "水"
+      }
+    ],
+    "gen": [
+      {
+        "id": 51,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 15,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 40,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 32,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 46,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 48,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 28,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      },
+      {
+        "id": 17,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "艮",
+        "palace_key": "gen",
+        "palace_element": "土"
+      }
+    ],
+    "kun": [
+      {
+        "id": 2,
+        "type": "本宮",
+        "shi": 6,
+        "ying": 3,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 24,
+        "type": "一世",
+        "shi": 1,
+        "ying": 4,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 19,
+        "type": "二世",
+        "shi": 2,
+        "ying": 5,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 11,
+        "type": "三世",
+        "shi": 3,
+        "ying": 6,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 34,
+        "type": "四世",
+        "shi": 4,
+        "ying": 1,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 43,
+        "type": "五世",
+        "shi": 5,
+        "ying": 2,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 5,
+        "type": "遊魂",
+        "shi": 4,
+        "ying": 1,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      },
+      {
+        "id": 8,
+        "type": "歸魂",
+        "shi": 3,
+        "ying": 6,
+        "palace": "坤",
+        "palace_key": "kun",
+        "palace_element": "土"
+      }
+    ]
+  },
+  "shi_ying_by_hexagram_id": {
+    "1": {
+      "id": 1,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "2": {
+      "id": 2,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "3": {
+      "id": 3,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "4": {
+      "id": 4,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "5": {
+      "id": 5,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "6": {
+      "id": 6,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "7": {
+      "id": 7,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "8": {
+      "id": 8,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "9": {
+      "id": 9,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "10": {
+      "id": 10,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "11": {
+      "id": 11,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "12": {
+      "id": 12,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "13": {
+      "id": 13,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "14": {
+      "id": 14,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "15": {
+      "id": 15,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "16": {
+      "id": 16,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "17": {
+      "id": 17,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "18": {
+      "id": 18,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "19": {
+      "id": 19,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "20": {
+      "id": 20,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "21": {
+      "id": 21,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "22": {
+      "id": 22,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "23": {
+      "id": 23,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "24": {
+      "id": 24,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "25": {
+      "id": 25,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "26": {
+      "id": 26,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "27": {
+      "id": 27,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "28": {
+      "id": 28,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "29": {
+      "id": 29,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "30": {
+      "id": 30,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "31": {
+      "id": 31,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "32": {
+      "id": 32,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "33": {
+      "id": 33,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "34": {
+      "id": 34,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "35": {
+      "id": 35,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "36": {
+      "id": 36,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "37": {
+      "id": 37,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "38": {
+      "id": 38,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "39": {
+      "id": 39,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "40": {
+      "id": 40,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "41": {
+      "id": 41,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "42": {
+      "id": 42,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "43": {
+      "id": 43,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "坤",
+      "palace_key": "kun",
+      "palace_element": "土"
+    },
+    "44": {
+      "id": 44,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "乾",
+      "palace_key": "qian",
+      "palace_element": "金"
+    },
+    "45": {
+      "id": 45,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "46": {
+      "id": 46,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "47": {
+      "id": 47,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "48": {
+      "id": 48,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "49": {
+      "id": 49,
+      "type": "四世",
+      "shi": 4,
+      "ying": 1,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "50": {
+      "id": 50,
+      "type": "二世",
+      "shi": 2,
+      "ying": 5,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "51": {
+      "id": 51,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "艮",
+      "palace_key": "gen",
+      "palace_element": "土"
+    },
+    "52": {
+      "id": 52,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "53": {
+      "id": 53,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "54": {
+      "id": 54,
+      "type": "歸魂",
+      "shi": 3,
+      "ying": 6,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "55": {
+      "id": 55,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "56": {
+      "id": 56,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "57": {
+      "id": 57,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "兌",
+      "palace_key": "dui",
+      "palace_element": "金"
+    },
+    "58": {
+      "id": 58,
+      "type": "本宮",
+      "shi": 6,
+      "ying": 3,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "59": {
+      "id": 59,
+      "type": "五世",
+      "shi": 5,
+      "ying": 2,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    },
+    "60": {
+      "id": 60,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "61": {
+      "id": 61,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
+    },
+    "62": {
+      "id": 62,
+      "type": "遊魂",
+      "shi": 4,
+      "ying": 1,
+      "palace": "巽",
+      "palace_key": "xun",
+      "palace_element": "木"
+    },
+    "63": {
+      "id": 63,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "坎",
+      "palace_key": "kan",
+      "palace_element": "水"
+    },
+    "64": {
+      "id": 64,
+      "type": "三世",
+      "shi": 3,
+      "ying": 6,
+      "palace": "離",
+      "palace_key": "li",
+      "palace_element": "火"
+    }
+  },
+  "guashen_rule": {
+    "formula": "世爻為陽，初爻起子順行至六爻；世爻為陰，初爻起午順行至六爻。取世爻對應地支為卦身地支，再於盤面尋其所在爻位。",
+    "yang_start_sequence": [
+      "子",
+      "丑",
+      "寅",
+      "卯",
+      "辰",
+      "巳"
+    ],
+    "yin_start_sequence": [
+      "午",
+      "未",
+      "申",
+      "酉",
+      "戌",
+      "亥"
+    ],
+    "quick_table": {
+      "子": 1,
+      "午": 1,
+      "丑": 2,
+      "未": 2,
+      "寅": 3,
+      "申": 3,
+      "卯": 4,
+      "酉": 4,
+      "辰": 5,
+      "戌": 5,
+      "巳": 6,
+      "亥": 6
+    }
+  },
+  "six_beasts": {
+    "order": [
+      "青龍",
+      "朱雀",
+      "勾陳",
+      "騰蛇",
+      "白虎",
+      "玄武"
+    ],
+    "day_stem_start": {
+      "甲": "青龍",
+      "乙": "青龍",
+      "丙": "朱雀",
+      "丁": "朱雀",
+      "戊": "勾陳",
+      "己": "騰蛇",
+      "庚": "白虎",
+      "辛": "白虎",
+      "壬": "玄武",
+      "癸": "玄武"
+    }
+  },
+  "najia": {
+    "note": "每卦以下卦取 inner，上卦取 outer（自下而上三爻）。",
+    "branch_element": {
+      "子": "水",
+      "丑": "土",
+      "寅": "木",
+      "卯": "木",
+      "辰": "土",
+      "巳": "火",
+      "午": "火",
+      "未": "土",
+      "申": "金",
+      "酉": "金",
+      "戌": "土",
+      "亥": "水"
+    },
+    "trigram_branches": {
+      "qian": {
+        "inner": [
+          "子",
+          "寅",
+          "辰"
+        ],
+        "outer": [
+          "午",
+          "申",
+          "戌"
+        ]
+      },
+      "dui": {
+        "inner": [
+          "巳",
+          "卯",
+          "丑"
+        ],
+        "outer": [
+          "亥",
+          "酉",
+          "未"
+        ]
+      },
+      "li": {
+        "inner": [
+          "卯",
+          "丑",
+          "亥"
+        ],
+        "outer": [
+          "酉",
+          "未",
+          "巳"
+        ]
+      },
+      "zhen": {
+        "inner": [
+          "子",
+          "寅",
+          "辰"
+        ],
+        "outer": [
+          "午",
+          "申",
+          "戌"
+        ]
+      },
+      "xun": {
+        "inner": [
+          "丑",
+          "亥",
+          "酉"
+        ],
+        "outer": [
+          "未",
+          "巳",
+          "卯"
+        ]
+      },
+      "kan": {
+        "inner": [
+          "寅",
+          "辰",
+          "午"
+        ],
+        "outer": [
+          "申",
+          "戌",
+          "子"
+        ]
+      },
+      "gen": {
+        "inner": [
+          "辰",
+          "午",
+          "申"
+        ],
+        "outer": [
+          "戌",
+          "子",
+          "寅"
+        ]
+      },
+      "kun": {
+        "inner": [
+          "未",
+          "巳",
+          "卯"
+        ],
+        "outer": [
+          "丑",
+          "亥",
+          "酉"
+        ]
+      }
+    }
+  },
+  "wuxing": {
+    "generates": {
+      "木": "火",
+      "火": "土",
+      "土": "金",
+      "金": "水",
+      "水": "木"
+    },
+    "controls": {
+      "木": "土",
+      "土": "水",
+      "水": "火",
+      "火": "金",
+      "金": "木"
+    },
+    "liuqin_by_relation": {
+      "same": "兄弟",
+      "self_generates_other": "子孫",
+      "other_generates_self": "父母",
+      "self_controls_other": "妻財",
+      "other_controls_self": "官鬼"
+    },
+    "palace_element_basis": "以本卦所屬八宮五行為我"
+  },
+  "xunkong": {
+    "sixty_ganzhi": [
+      "甲子",
+      "乙丑",
+      "丙寅",
+      "丁卯",
+      "戊辰",
+      "己巳",
+      "庚午",
+      "辛未",
+      "壬申",
+      "癸酉",
+      "甲戌",
+      "乙亥",
+      "丙子",
+      "丁丑",
+      "戊寅",
+      "己卯",
+      "庚辰",
+      "辛巳",
+      "壬午",
+      "癸未",
+      "甲申",
+      "乙酉",
+      "丙戌",
+      "丁亥",
+      "戊子",
+      "己丑",
+      "庚寅",
+      "辛卯",
+      "壬辰",
+      "癸巳",
+      "甲午",
+      "乙未",
+      "丙申",
+      "丁酉",
+      "戊戌",
+      "己亥",
+      "庚子",
+      "辛丑",
+      "壬寅",
+      "癸卯",
+      "甲辰",
+      "乙巳",
+      "丙午",
+      "丁未",
+      "戊申",
+      "己酉",
+      "庚戌",
+      "辛亥",
+      "壬子",
+      "癸丑",
+      "甲寅",
+      "乙卯",
+      "丙辰",
+      "丁巳",
+      "戊午",
+      "己未",
+      "庚申",
+      "辛酉",
+      "壬戌",
+      "癸亥"
+    ],
+    "by_day_ganzhi": {
+      "甲子": [
+        "戌",
+        "亥"
+      ],
+      "乙丑": [
+        "戌",
+        "亥"
+      ],
+      "丙寅": [
+        "戌",
+        "亥"
+      ],
+      "丁卯": [
+        "戌",
+        "亥"
+      ],
+      "戊辰": [
+        "戌",
+        "亥"
+      ],
+      "己巳": [
+        "戌",
+        "亥"
+      ],
+      "庚午": [
+        "戌",
+        "亥"
+      ],
+      "辛未": [
+        "戌",
+        "亥"
+      ],
+      "壬申": [
+        "戌",
+        "亥"
+      ],
+      "癸酉": [
+        "戌",
+        "亥"
+      ],
+      "甲戌": [
+        "申",
+        "酉"
+      ],
+      "乙亥": [
+        "申",
+        "酉"
+      ],
+      "丙子": [
+        "申",
+        "酉"
+      ],
+      "丁丑": [
+        "申",
+        "酉"
+      ],
+      "戊寅": [
+        "申",
+        "酉"
+      ],
+      "己卯": [
+        "申",
+        "酉"
+      ],
+      "庚辰": [
+        "申",
+        "酉"
+      ],
+      "辛巳": [
+        "申",
+        "酉"
+      ],
+      "壬午": [
+        "申",
+        "酉"
+      ],
+      "癸未": [
+        "申",
+        "酉"
+      ],
+      "甲申": [
+        "午",
+        "未"
+      ],
+      "乙酉": [
+        "午",
+        "未"
+      ],
+      "丙戌": [
+        "午",
+        "未"
+      ],
+      "丁亥": [
+        "午",
+        "未"
+      ],
+      "戊子": [
+        "午",
+        "未"
+      ],
+      "己丑": [
+        "午",
+        "未"
+      ],
+      "庚寅": [
+        "午",
+        "未"
+      ],
+      "辛卯": [
+        "午",
+        "未"
+      ],
+      "壬辰": [
+        "午",
+        "未"
+      ],
+      "癸巳": [
+        "午",
+        "未"
+      ],
+      "甲午": [
+        "辰",
+        "巳"
+      ],
+      "乙未": [
+        "辰",
+        "巳"
+      ],
+      "丙申": [
+        "辰",
+        "巳"
+      ],
+      "丁酉": [
+        "辰",
+        "巳"
+      ],
+      "戊戌": [
+        "辰",
+        "巳"
+      ],
+      "己亥": [
+        "辰",
+        "巳"
+      ],
+      "庚子": [
+        "辰",
+        "巳"
+      ],
+      "辛丑": [
+        "辰",
+        "巳"
+      ],
+      "壬寅": [
+        "辰",
+        "巳"
+      ],
+      "癸卯": [
+        "辰",
+        "巳"
+      ],
+      "甲辰": [
+        "寅",
+        "卯"
+      ],
+      "乙巳": [
+        "寅",
+        "卯"
+      ],
+      "丙午": [
+        "寅",
+        "卯"
+      ],
+      "丁未": [
+        "寅",
+        "卯"
+      ],
+      "戊申": [
+        "寅",
+        "卯"
+      ],
+      "己酉": [
+        "寅",
+        "卯"
+      ],
+      "庚戌": [
+        "寅",
+        "卯"
+      ],
+      "辛亥": [
+        "寅",
+        "卯"
+      ],
+      "壬子": [
+        "寅",
+        "卯"
+      ],
+      "癸丑": [
+        "寅",
+        "卯"
+      ],
+      "甲寅": [
+        "子",
+        "丑"
+      ],
+      "乙卯": [
+        "子",
+        "丑"
+      ],
+      "丙辰": [
+        "子",
+        "丑"
+      ],
+      "丁巳": [
+        "子",
+        "丑"
+      ],
+      "戊午": [
+        "子",
+        "丑"
+      ],
+      "己未": [
+        "子",
+        "丑"
+      ],
+      "庚申": [
+        "子",
+        "丑"
+      ],
+      "辛酉": [
+        "子",
+        "丑"
+      ],
+      "壬戌": [
+        "子",
+        "丑"
+      ],
+      "癸亥": [
+        "子",
+        "丑"
+      ]
+    },
+    "xun_starts": [
+      "甲子",
+      "甲戌",
+      "甲申",
+      "甲午",
+      "甲辰",
+      "甲寅"
+    ],
+    "xun_voids": {
+      "甲子旬": [
+        "戌",
+        "亥"
+      ],
+      "甲戌旬": [
+        "申",
+        "酉"
+      ],
+      "甲申旬": [
+        "午",
+        "未"
+      ],
+      "甲午旬": [
+        "辰",
+        "巳"
+      ],
+      "甲辰旬": [
+        "寅",
+        "卯"
+      ],
+      "甲寅旬": [
+        "子",
+        "丑"
+      ]
+    }
+  },
+  "shensha": {
+    "basis_default": "day_branch",
+    "tianyi_gui_ren_by_day_stem": {
+      "甲": [
+        "丑",
+        "未"
+      ],
+      "戊": [
+        "丑",
+        "未"
+      ],
+      "庚": [
+        "丑",
+        "未"
+      ],
+      "乙": [
+        "子",
+        "申"
+      ],
+      "己": [
+        "子",
+        "申"
+      ],
+      "丙": [
+        "亥",
+        "酉"
+      ],
+      "丁": [
+        "亥",
+        "酉"
+      ],
+      "壬": [
+        "卯",
+        "巳"
+      ],
+      "癸": [
+        "卯",
+        "巳"
+      ],
+      "辛": [
+        "寅",
+        "午"
+      ]
+    },
+    "yima_by_branch_group": {
+      "申子辰": "寅",
+      "寅午戌": "申",
+      "亥卯未": "巳",
+      "巳酉丑": "亥"
+    },
+    "taohua_by_branch_group": {
+      "申子辰": "酉",
+      "寅午戌": "卯",
+      "亥卯未": "子",
+      "巳酉丑": "午"
+    }
+  }
+}
