@@ -163,6 +163,8 @@
     .line-yang { color: #2b2b2b; }
     .line-yin { color: #505050; }
     .moving { color: #b2431f; font-weight: 700; }
+    .table-wrap { overflow-x: auto; }
+    .chg-cell { background: #fdf8ee; }
 
     .simple .detail-only { display: none; }
 
@@ -473,11 +475,14 @@
       const xk = getXunkong(gz.day || "");
 
       const palaceInfo = state.rules.shi_ying_by_hexagram_id[String(mainHex.id)] || state.rules.shi_ying_by_hexagram_id[mainHex.id];
+      const chgPalaceInfo = state.rules.shi_ying_by_hexagram_id[String(chgHex.id)] || state.rules.shi_ying_by_hexagram_id[chgHex.id];
       const shi = palaceInfo ? palaceInfo.shi : 6;
       const ying = palaceInfo ? palaceInfo.ying : 3;
       const palaceElement = palaceInfo ? palaceInfo.palace_element : (mainHex.lower ? mainHex.lower.element : "?");
+      const chgPalaceElement = chgPalaceInfo ? chgPalaceInfo.palace_element : (chgHex.lower ? chgHex.lower.element : "?");
 
       const najia = computeNajia(mainHex);
+      const chgNajia = computeNajia(chgHex);
       const sixBeasts = computeSixBeasts(dayStem);
 
       const shiBit = (mainBits >> (shi - 1)) & 1;
@@ -499,13 +504,18 @@
         rows.push({
           line,
           beast: sixBeasts[i],
-          liuqin: relationLiuqin(palaceElement, najia[i].element),
-          najia: `${najia[i].branch}${najia[i].element}`,
+          mainLiuqin: relationLiuqin(palaceElement, najia[i].element),
+          mainNajia: `${najia[i].branch}${najia[i].element}`,
+          chgLiuqin: relationLiuqin(chgPalaceElement, chgNajia[i].element),
+          chgNajia: `${chgNajia[i].branch}${chgNajia[i].element}`,
           shi: line === shi,
           ying: line === ying,
           guashen: line === guashenLine,
           empty: xk.includes(najia[i].branch),
+          chgEmpty: xk.includes(chgNajia[i].branch),
           lineText: lineText(bit),
+          chgLineText: lineText((chgBits >> i) & 1),
+          isMoving: movingFlag,
           movingMark: lines[i] === 6 ? "○" : (lines[i] === 9 ? "×" : "")
         });
       }
@@ -539,13 +549,17 @@
 
       const rowsHtml = res.rows.map((r) => {
         const lineClass = r.lineText.includes("  ") ? "line-yin" : "line-yang";
+        const chgLineClass = r.chgLineText.includes("  ") ? "line-yin" : "line-yang";
         return `<tr>
           <td>${r.line}</td>
           <td>${r.beast}</td>
-          <td>${r.liuqin}</td>
-          <td>${r.najia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
+          <td>${r.mainLiuqin}</td>
+          <td>${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
+          <td class="chg-cell">${r.chgLiuqin}</td>
+          <td class="chg-cell">${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</td>
           <td>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</td>
           <td class="${lineClass}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ''}</td>
+          <td class="${chgLineClass} chg-cell">${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}</td>
         </tr>`;
       }).join("");
 
@@ -578,19 +592,24 @@
           <span class="tag">卦身</span>${res.guashenBranch}（第${res.guashenLine}爻）
         </div>
 
+        <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>爻位</th>
               <th>六獸</th>
-              <th>六親</th>
-              <th>納甲</th>
+              <th>本卦六親</th>
+              <th>本卦納甲</th>
+              <th>之卦六親</th>
+              <th>之卦納甲</th>
               <th>世應/卦身</th>
-              <th>陰陽線</th>
+              <th>本卦線</th>
+              <th>之卦線</th>
             </tr>
           </thead>
           <tbody>${rowsHtml}</tbody>
         </table>
+        </div>
       `;
     }
 
