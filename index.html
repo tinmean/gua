@@ -572,11 +572,16 @@
       const chgNajia = computeNajia(chgHex);
       const sixBeasts = computeSixBeasts(dayStem);
 
-      const shiBit = (mainBits >> (shi - 1)) & 1;
-      const seq = shiBit ? state.rules.guashen_rule.yang_start_sequence : state.rules.guashen_rule.yin_start_sequence;
-      const guashenBranch = seq[shi - 1];
-      let guashenLine = najia.find((x) => x.branch === guashenBranch)?.line || null;
-      if (!guashenLine) guashenLine = state.rules.guashen_rule.quick_table[guashenBranch] || shi;
+      const shiBranch = najia[shi - 1] ? najia[shi - 1].branch : "";
+      let guashenLine = state.rules.guashen_rule.quick_table[shiBranch] || null;
+      // Fallback to yin/yang sequence rule if quick table does not cover the branch.
+      if (!guashenLine) {
+        const shiBit = (mainBits >> (shi - 1)) & 1;
+        const seq = shiBit ? state.rules.guashen_rule.yang_start_sequence : state.rules.guashen_rule.yin_start_sequence;
+        const mappedBranch = seq[shi - 1];
+        guashenLine = najia.find((x) => x.branch === mappedBranch)?.line || state.rules.guashen_rule.quick_table[mappedBranch] || shi;
+      }
+      const guashenBranch = najia[guashenLine - 1] ? najia[guashenLine - 1].branch : shiBranch;
 
       const basisBranch = shenshaBasis === "year_branch" ? yearBranch : dayBranch;
       const tianyi = state.rules.shensha.tianyi_gui_ren_by_day_stem[dayStem] || [];
