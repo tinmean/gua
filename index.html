@@ -165,6 +165,17 @@
     .moving { color: #b2431f; font-weight: 700; }
     .table-wrap { overflow-x: auto; }
     .chg-cell { background: #fdf8ee; }
+    .moving-row td {
+      background: linear-gradient(90deg, rgba(255, 227, 178, 0.45), rgba(255, 246, 223, 0.45));
+    }
+    .moving-row .chg-cell {
+      background: linear-gradient(90deg, rgba(255, 214, 150, 0.52), rgba(255, 236, 203, 0.52));
+    }
+    .move-arrow {
+      color: #b2431f;
+      font-weight: 800;
+      margin-right: 4px;
+    }
 
     .simple .detail-only { display: none; }
 
@@ -324,11 +335,13 @@
       const hex = state.hexById.get(id);
       const lowerBits = bitsInt & 7;
       const upperBits = (bitsInt >> 3) & 7;
+      const upperFromHex = hex && hex.upper_trigram ? state.rules.trigram_meta[hex.upper_trigram] : null;
+      const lowerFromHex = hex && hex.lower_trigram ? state.rules.trigram_meta[hex.lower_trigram] : null;
       return {
         id,
         name: hex ? hex.name : `未知(${id || "?"})`,
-        upper: getTrigramFromBits3(upperBits),
-        lower: getTrigramFromBits3(lowerBits)
+        upper: upperFromHex || getTrigramFromBits3(upperBits),
+        lower: lowerFromHex || getTrigramFromBits3(lowerBits)
       };
     }
 
@@ -550,8 +563,8 @@
       const rowsHtml = res.rows.map((r) => {
         const lineClass = r.lineText.includes("  ") ? "line-yin" : "line-yang";
         const chgLineClass = r.chgLineText.includes("  ") ? "line-yin" : "line-yang";
-        return `<tr>
-          <td>${r.line}</td>
+        return `<tr class="${r.isMoving ? "moving-row" : ""}">
+          <td>${r.line}${r.isMoving ? ' <span class="moving">動</span>' : ''}</td>
           <td>${r.beast}</td>
           <td>${r.mainLiuqin}</td>
           <td>${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
@@ -559,7 +572,7 @@
           <td class="chg-cell">${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</td>
           <td>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</td>
           <td class="${lineClass}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ''}</td>
-          <td class="${chgLineClass} chg-cell">${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}</td>
+          <td class="${chgLineClass} chg-cell">${r.isMoving ? '<span class="move-arrow">→</span>' : ''}${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}</td>
         </tr>`;
       }).join("");
 
