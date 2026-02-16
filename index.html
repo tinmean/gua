@@ -488,11 +488,9 @@
       const xk = getXunkong(gz.day || "");
 
       const palaceInfo = state.rules.shi_ying_by_hexagram_id[String(mainHex.id)] || state.rules.shi_ying_by_hexagram_id[mainHex.id];
-      const chgPalaceInfo = state.rules.shi_ying_by_hexagram_id[String(chgHex.id)] || state.rules.shi_ying_by_hexagram_id[chgHex.id];
       const shi = palaceInfo ? palaceInfo.shi : 6;
       const ying = palaceInfo ? palaceInfo.ying : 3;
       const palaceElement = palaceInfo ? palaceInfo.palace_element : (mainHex.lower ? mainHex.lower.element : "?");
-      const chgPalaceElement = chgPalaceInfo ? chgPalaceInfo.palace_element : (chgHex.lower ? chgHex.lower.element : "?");
 
       const najia = computeNajia(mainHex);
       const chgNajia = computeNajia(chgHex);
@@ -519,7 +517,8 @@
           beast: sixBeasts[i],
           mainLiuqin: relationLiuqin(palaceElement, najia[i].element),
           mainNajia: `${najia[i].branch}${najia[i].element}`,
-          chgLiuqin: relationLiuqin(chgPalaceElement, chgNajia[i].element),
+          // Traditional setup: changed-line liuqin is still based on main-hex palace element.
+          chgLiuqin: relationLiuqin(palaceElement, chgNajia[i].element),
           chgNajia: `${chgNajia[i].branch}${chgNajia[i].element}`,
           shi: line === shi,
           ying: line === ying,
