@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>六爻徒手成卦訓練</title>
+  <style>
+    :root {
+      --bg: #f3f0e8;
+      --paper: #fffdf8;
+      --line: #d8cfba;
+      --ink: #1f2328;
+      --muted: #666;
+      --ok: #1d7a4a;
+      --bad: #b4432c;
+      --accent: #8b4513;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 10% 10%, rgba(139,69,19,.08), transparent 30%), var(--bg);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    h2 { margin: 0 0 8px; font-size: 20px; }
+    .muted { font-size: 13px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
+    label { display: block; margin-bottom: 4px; font-weight: 600; }
+    input, select, button {
+      width: 100%; border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px; font-size: 14px; background: #fff; color: var(--ink);
+    }
+    button { cursor: pointer; font-weight: 700; background: linear-gradient(180deg, #fffdf5, #f8f2e5); }
+    button:hover { filter: brightness(0.98); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn-row button { width: auto; }
+    .tag {
+      display: inline-block; padding: 1px 8px; border-radius: 999px;
+      border: 1px solid #d0c4a4; font-size: 12px; margin-right: 6px; background: #fff;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd3bc; padding: 6px; text-align: center; font-size: 14px; }
+    th { background: #f8f3e7; }
+    .section-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+    .section-actions button { width: auto; }
+    .hint, .answer {
+      display: none;
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px dashed #d5c9a8;
+      background: #fffef9;
+      font-size: 13px;
+    }
+    .hint.show, .answer.show { display: block; }
+    .ok { color: var(--ok); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+    .score { font-size: 13px; color: #5a4c2f; }
+    .links { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .links a {
+      font-size: 13px; text-decoration: none; color: #4f3e1f;
+      border: 1px solid #d0c4a4; border-radius: 999px; padding: 5px 10px; background: #fff;
+    }
+    @media (max-width: 900px) {
+      .col-3, .col-4, .col-6 { grid-column: span 12; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel">
+      <h1>六爻徒手成卦訓練</h1>
+      <div class="muted">分區練習：卦裝地支、六親、六獸、世應卦身。每區可看提示、檢查答案、揭示解答。</div>
+      <div class="links">
+        <a href="./index.html">回排盤主頁</a>
+        <a href="https://gua.kfacehand.com" target="_blank" rel="noopener noreferrer">正式站</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>出題設定</h2>
+      <div class="grid">
+        <div class="col-4">
+          <label for="dtInput">起卦時間（台北）</label>
+          <input id="dtInput" type="text" placeholder="YYYY-MM-DD HH:mm" />
+        </div>
+        <div class="col-4">
+          <label for="linesInput">六爻（下→上，6/7/8/9）</label>
+          <input id="linesInput" type="text" placeholder="7,8,9,6,7,8" />
+        </div>
+        <div class="col-4">
+          <label>&nbsp;</label>
+          <div class="btn-row">
+            <button id="btnRandom" type="button">隨機新題</button>
+            <button id="btnGenerate" type="button">產生題目</button>
+            <button id="btnRevealAll" type="button">顯示全部解答</button>
+          </div>
+        </div>
+        <div class="col-12">
+          <span class="tag" id="qHex">本卦：-</span>
+          <span class="tag" id="qPillar">日干：-</span>
+          <span class="tag" id="qPalace">宮：-</span>
+          <span class="tag" id="qShiYing">世應：-</span>
+        </div>
+      </div>
+      <div class="muted" id="status"></div>
+    </section>
+
+    <section class="panel" id="secNajia">
+      <h2>A. 卦裝地支（本卦）</h2>
+      <div class="section-actions">
+        <button type="button" data-toggle-hint="najia">提示</button>
+        <button type="button" data-check="najia">檢查</button>
+        <button type="button" data-reveal="najia">看解答</button>
+      </div>
+      <div class="hint" id="hintNajia"></div>
+      <div id="boxNajia"></div>
+      <div class="answer" id="ansNajia"></div>
+      <div class="score" id="scoreNajia"></div>
+    </section>
+
+    <section class="panel" id="secLiuqin">
+      <h2>B. 六親（本卦/之卦）</h2>
+      <div class="section-actions">
+        <button type="button" data-toggle-hint="liuqin">提示</button>
+        <button type="button" data-check="liuqin">檢查</button>
+        <button type="button" data-reveal="liuqin">看解答</button>
+      </div>
+      <div class="hint" id="hintLiuqin"></div>
+      <div id="boxLiuqin"></div>
+      <div class="answer" id="ansLiuqin"></div>
+      <div class="score" id="scoreLiuqin"></div>
+    </section>
+
+    <section class="panel" id="secBeast">
+      <h2>C. 六獸（司日六神）</h2>
+      <div class="section-actions">
+        <button type="button" data-toggle-hint="beast">提示</button>
+        <button type="button" data-check="beast">檢查</button>
+        <button type="button" data-reveal="beast">看解答</button>
+      </div>
+      <div class="hint" id="hintBeast"></div>
+      <div id="boxBeast"></div>
+      <div class="answer" id="ansBeast"></div>
+      <div class="score" id="scoreBeast"></div>
+    </section>
+
+    <section class="panel" id="secCore">
+      <h2>D. 世應與卦身</h2>
+      <div class="section-actions">
+        <button type="button" data-toggle-hint="core">提示</button>
+        <button type="button" data-check="core">檢查</button>
+        <button type="button" data-reveal="core">看解答</button>
+      </div>
+      <div class="hint" id="hintCore"></div>
+      <div id="boxCore"></div>
+      <div class="answer" id="ansCore"></div>
+      <div class="score" id="scoreCore"></div>
+    </section>
+  </div>
+
+  <script>
+    const TZ = "Asia/Taipei";
+    const STEMS = "甲乙丙丁戊己庚辛壬癸".split("");
+    const BRANCHES = "子丑寅卯辰巳午未申酉戌亥".split("");
+    const LIUQIN = ["父母", "兄弟", "子孫", "妻財", "官鬼"];
+
+    const state = {
+      rules: null,
+      mapByBits: new Map(),
+      hexById: new Map(),
+      current: null
+    };
+
+    function setStatus(msg, err) {
+      const el = document.getElementById("status");
+      el.textContent = msg || "";
+      el.style.color = err ? "#b4432c" : "#4b5a4f";
+    }
+
+    function getTaipeiNowString() {
+      const parts = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: TZ,
+        year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false
+      }).formatToParts(new Date());
+      const pick = (t) => parts.find((p) => p.type === t).value;
+      return `${pick("year")}-${pick("month")}-${pick("day")} ${pick("hour")}:${pick("minute")}`;
+    }
+
+    function parseTaipeiDateTime(s) {
+      const m = /^\s*(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})\s*$/.exec(s || "");
+      if (!m) return null;
+      return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]) - 8, Number(m[5]), 0));
+    }
+
+    function parseLines(s) {
+      const arr = String(s || "").split(",").map((x) => Number(x.trim()));
+      if (arr.length !== 6 || arr.some((n) => ![6,7,8,9].includes(n))) return null;
+      return arr;
+    }
+
+    function lineToBit(v) { return (v === 7 || v === 9) ? 1 : 0; }
+    function changedBit(v) { return v === 6 ? 1 : (v === 9 ? 0 : lineToBit(v)); }
+    function bitsInt(lines, changed) {
+      let n = 0;
+      for (let i = 0; i < 6; i++) n |= ((changed ? changedBit(lines[i]) : lineToBit(lines[i])) << i);
+      return n;
+    }
+
+    function getGanzhi(dateUtc) {
+      try {
+        if (window.Solar && window.Solar.fromDate) {
+          const lunar = window.Solar.fromDate(dateUtc).getLunar();
+          const day = lunar.getDayInGanZhiExact ? lunar.getDayInGanZhiExact() : lunar.getDayInGanZhi();
+          return { day: day || "甲子" };
+        }
+      } catch (_) {}
+      return { day: "甲子" };
+    }
+
+    function getHexMeta(bits) {
+      const id = state.mapByBits.get(bits);
+      const hex = state.hexById.get(id);
+      return {
+        id,
+        name: hex ? hex.name : "?",
+        upper: state.rules.trigram_meta[hex.upper_trigram],
+        lower: state.rules.trigram_meta[hex.lower_trigram]
+      };
+    }
+
+    function computeNajia(hexMeta) {
+      const tb = state.rules.najia.trigram_branches;
+      const be = state.rules.najia.branch_element;
+      const branches = [...tb[hexMeta.lower.key].inner, ...tb[hexMeta.upper.key].outer];
+      return branches.map((b, i) => ({ line: i + 1, branch: b, element: be[b] || "?" }));
+    }
+
+    function relationLiuqin(selfEl, otherEl) {
+      const g = state.rules.wuxing.generates;
+      const c = state.rules.wuxing.controls;
+      if (selfEl === otherEl) return "兄弟";
+      if (g[selfEl] === otherEl) return "子孫";
+      if (g[otherEl] === selfEl) return "父母";
+      if (c[selfEl] === otherEl) return "妻財";
+      if (c[otherEl] === selfEl) return "官鬼";
+      return "?";
+    }
+
+    function computeBeasts(dayStem) {
+      const order = state.rules.six_beasts.order;
+      const start = state.rules.six_beasts.day_stem_start[dayStem] || "青龍";
+      const idx = order.indexOf(start);
+      const out = [];
+      for (let i = 0; i < 6; i++) out.push(order[(idx + i) % order.length]);
+      return out;
+    }
+
+    function buildProblem(lines, dt) {
+      const main = getHexMeta(bitsInt(lines, false));
+      const chg = getHexMeta(bitsInt(lines, true));
+      const najia = computeNajia(main);
+      const chgNajia = computeNajia(chg);
+      const palaceInfo = state.rules.shi_ying_by_hexagram_id[String(main.id)] || state.rules.shi_ying_by_hexagram_id[main.id];
+      const palaceEl = palaceInfo ? palaceInfo.palace_element : main.lower.element;
+      const mainLq = najia.map((n) => relationLiuqin(palaceEl, n.element));
+      const chgLq = chgNajia.map((n) => relationLiuqin(palaceEl, n.element));
+      const dayGz = getGanzhi(dt).day;
+      const dayStem = dayGz[0];
+      const beasts = computeBeasts(dayStem);
+      const shi = palaceInfo ? palaceInfo.shi : 6;
+      const ying = palaceInfo ? palaceInfo.ying : 3;
+      const shiBranch = najia[shi - 1].branch;
+      const guashen = state.rules.guashen_rule.quick_table[shiBranch] || shi;
+      return { lines, dt, dayStem, main, chg, najia, chgNajia, mainLq, chgLq, beasts, shi, ying, guashen, palaceInfo, palaceEl };
+    }
+
+    function branchOptions() { return BRANCHES.map((b) => `<option value="${b}">${b}</option>`).join(""); }
+    function lqOptions() { return LIUQIN.map((x) => `<option value="${x}">${x}</option>`).join(""); }
+    function beastOptions() { return state.rules.six_beasts.order.map((x) => `<option value="${x}">${x}</option>`).join(""); }
+    function lineNumOptions() { return [1,2,3,4,5,6].map((n) => `<option value="${n}">${n}</option>`).join(""); }
+
+    function renderQuestion() {
+      const q = state.current;
+      document.getElementById("qHex").textContent = `本卦：#${q.main.id} ${q.main.name}（上${q.main.upper.name}下${q.main.lower.name}）`;
+      document.getElementById("qPillar").textContent = `日干：${q.dayStem}`;
+      document.getElementById("qPalace").textContent = `八宮：${q.palaceInfo ? (q.palaceInfo.palace + "宮 " + q.palaceInfo.type) : "?"}（${q.palaceEl}）`;
+      document.getElementById("qShiYing").textContent = `世應：世${q.shi} 應${q.ying}`;
+
+      document.getElementById("hintNajia").textContent = `下卦取 inner（1-3爻），上卦取 outer（4-6爻）。本題本卦：上${q.main.upper.name} 下${q.main.lower.name}。`;
+      document.getElementById("hintLiuqin").textContent = `本題六親以本卦宮五行「${q.palaceEl}」為我，依五行生剋判定。`;
+      document.getElementById("hintBeast").textContent = `日干 ${q.dayStem} 起 ${state.rules.six_beasts.day_stem_start[q.dayStem] || "青龍"}，自初爻往上輪轉。`;
+      document.getElementById("hintCore").textContent = `世應依八宮類型表；卦身用持世地支速查（本題世支=${q.najia[q.shi - 1].branch}）。`;
+
+      renderNajia();
+      renderLiuqin();
+      renderBeast();
+      renderCore();
+      resetSectionStates();
+    }
+
+    function resetSectionStates() {
+      ["Najia","Liuqin","Beast","Core"].forEach((x) => {
+        document.getElementById(`ans${x}`).classList.remove("show");
+        document.getElementById(`score${x}`).textContent = "";
+      });
+    }
+
+    function renderNajia() {
+      const rows = [];
+      for (let line = 6; line >= 1; line--) {
+        rows.push(`<tr><td>${line}</td><td><select data-sec="najia" data-line="${line}">${branchOptions()}</select></td></tr>`);
+      }
+      document.getElementById("boxNajia").innerHTML = `<table><thead><tr><th>爻位</th><th>請填地支</th></tr></thead><tbody>${rows.join("")}</tbody></table>`;
+      document.getElementById("ansNajia").textContent = `解答：${state.current.najia.map((x) => `${x.line}:${x.branch}`).join("，")}`;
+    }
+
+    function renderLiuqin() {
+      const rows = [];
+      for (let line = 6; line >= 1; line--) {
+        rows.push(`<tr>
+          <td>${line}</td>
+          <td><select data-sec="lq-main" data-line="${line}">${lqOptions()}</select></td>
+          <td><select data-sec="lq-chg" data-line="${line}">${lqOptions()}</select></td>
+        </tr>`);
+      }
+      document.getElementById("boxLiuqin").innerHTML = `<table><thead><tr><th>爻位</th><th>本卦六親</th><th>之卦六親</th></tr></thead><tbody>${rows.join("")}</tbody></table>`;
+      document.getElementById("ansLiuqin").textContent = `解答：${state.current.mainLq.map((x, i) => `${i+1}:${x}->${state.current.chgLq[i]}`).join("，")}`;
+    }
+
+    function renderBeast() {
+      const rows = [];
+      for (let line = 6; line >= 1; line--) {
+        rows.push(`<tr><td>${line}</td><td><select data-sec="beast" data-line="${line}">${beastOptions()}</select></td></tr>`);
+      }
+      document.getElementById("boxBeast").innerHTML = `<table><thead><tr><th>爻位</th><th>六獸</th></tr></thead><tbody>${rows.join("")}</tbody></table>`;
+      document.getElementById("ansBeast").textContent = `解答：${state.current.beasts.map((x, i) => `${i+1}:${x}`).join("，")}`;
+    }
+
+    function renderCore() {
+      document.getElementById("boxCore").innerHTML = `
+        <table>
+          <thead><tr><th>項目</th><th>請作答</th></tr></thead>
+          <tbody>
+            <tr><td>世爻位</td><td><select id="ansShi">${lineNumOptions()}</select></td></tr>
+            <tr><td>應爻位</td><td><select id="ansYing">${lineNumOptions()}</select></td></tr>
+            <tr><td>卦身爻位</td><td><select id="ansGuashen">${lineNumOptions()}</select></td></tr>
+          </tbody>
+        </table>`;
+      document.getElementById("ansCore").textContent = `解答：世=${state.current.shi}，應=${state.current.ying}，卦身=${state.current.guashen}`;
+    }
+
+    function toggleHint(key) {
+      const id = ({najia:"hintNajia",liuqin:"hintLiuqin",beast:"hintBeast",core:"hintCore"})[key];
+      document.getElementById(id).classList.toggle("show");
+    }
+
+    function checkNajia() {
+      let ok = 0;
+      const total = 6;
+      document.querySelectorAll('select[data-sec="najia"]').forEach((sel) => {
+        const line = Number(sel.dataset.line);
+        const right = state.current.najia[line - 1].branch;
+        const hit = sel.value === right;
+        sel.style.borderColor = hit ? "#1d7a4a" : "#b4432c";
+        if (hit) ok++;
+      });
+      document.getElementById("scoreNajia").innerHTML = `結果：<span class="${ok===total?'ok':'bad'}">${ok}/${total}</span>`;
+    }
+
+    function checkLiuqin() {
+      let ok = 0;
+      const total = 12;
+      document.querySelectorAll('select[data-sec="lq-main"]').forEach((sel) => {
+        const line = Number(sel.dataset.line);
+        const right = state.current.mainLq[line - 1];
+        const hit = sel.value === right;
+        sel.style.borderColor = hit ? "#1d7a4a" : "#b4432c";
+        if (hit) ok++;
+      });
+      document.querySelectorAll('select[data-sec="lq-chg"]').forEach((sel) => {
+        const line = Number(sel.dataset.line);
+        const right = state.current.chgLq[line - 1];
+        const hit = sel.value === right;
+        sel.style.borderColor = hit ? "#1d7a4a" : "#b4432c";
+        if (hit) ok++;
+      });
+      document.getElementById("scoreLiuqin").innerHTML = `結果：<span class="${ok===total?'ok':'bad'}">${ok}/${total}</span>`;
+    }
+
+    function checkBeast() {
+      let ok = 0;
+      const total = 6;
+      document.querySelectorAll('select[data-sec="beast"]').forEach((sel) => {
+        const line = Number(sel.dataset.line);
+        const right = state.current.beasts[line - 1];
+        const hit = sel.value === right;
+        sel.style.borderColor = hit ? "#1d7a4a" : "#b4432c";
+        if (hit) ok++;
+      });
+      document.getElementById("scoreBeast").innerHTML = `結果：<span class="${ok===total?'ok':'bad'}">${ok}/${total}</span>`;
+    }
+
+    function checkCore() {
+      const s = Number(document.getElementById("ansShi").value);
+      const y = Number(document.getElementById("ansYing").value);
+      const g = Number(document.getElementById("ansGuashen").value);
+      const hit = (s === state.current.shi) + (y === state.current.ying) + (g === state.current.guashen);
+      const total = 3;
+      document.getElementById("ansShi").style.borderColor = s === state.current.shi ? "#1d7a4a" : "#b4432c";
+      document.getElementById("ansYing").style.borderColor = y === state.current.ying ? "#1d7a4a" : "#b4432c";
+      document.getElementById("ansGuashen").style.borderColor = g === state.current.guashen ? "#1d7a4a" : "#b4432c";
+      document.getElementById("scoreCore").innerHTML = `結果：<span class="${hit===total?'ok':'bad'}">${hit}/${total}</span>`;
+    }
+
+    function reveal(key) {
+      const id = ({najia:"ansNajia",liuqin:"ansLiuqin",beast:"ansBeast",core:"ansCore"})[key];
+      document.getElementById(id).classList.add("show");
+    }
+
+    function revealAll() {
+      ["najia","liuqin","beast","core"].forEach(reveal);
+    }
+
+    function randomLines() {
+      const arr = [];
+      for (let i = 0; i < 6; i++) arr.push([6,7,8,9][Math.floor(Math.random() * 4)]);
+      return arr;
+    }
+
+    function randomizeQuestion() {
+      document.getElementById("linesInput").value = randomLines().join(",");
+      document.getElementById("dtInput").value = getTaipeiNowString();
+      generateQuestion();
+    }
+
+    function generateQuestion() {
+      const lines = parseLines(document.getElementById("linesInput").value.trim());
+      if (!lines) return setStatus("六爻格式錯誤，請輸入 6 個 6/7/8/9。", true);
+      const dt = parseTaipeiDateTime(document.getElementById("dtInput").value.trim());
+      if (!dt) return setStatus("時間格式錯誤，請輸入 YYYY-MM-DD HH:mm。", true);
+      state.current = buildProblem(lines, dt);
+      renderQuestion();
+      setStatus("題目已產生。", false);
+    }
+
+    async function loadData() {
+      const [hexData, mappingData, rules] = await Promise.all([
+        fetch("./data/hexagrams_zh_tw.json").then((r) => r.json()),
+        fetch("./data/king_wen_mapping.json").then((r) => r.json()),
+        fetch("./data/rules.json").then((r) => r.json())
+      ]);
+      state.rules = rules;
+      mappingData.mappings.forEach((m) => state.mapByBits.set(m.bits_int, m.id));
+      hexData.hexagrams.forEach((h) => state.hexById.set(h.id, h));
+    }
+
+    function initActions() {
+      document.getElementById("btnRandom").addEventListener("click", randomizeQuestion);
+      document.getElementById("btnGenerate").addEventListener("click", generateQuestion);
+      document.getElementById("btnRevealAll").addEventListener("click", revealAll);
+
+      document.querySelectorAll("button[data-toggle-hint]").forEach((btn) => {
+        btn.addEventListener("click", () => toggleHint(btn.dataset.toggleHint));
+      });
+      document.querySelectorAll("button[data-check]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const k = btn.dataset.check;
+          if (k === "najia") checkNajia();
+          if (k === "liuqin") checkLiuqin();
+          if (k === "beast") checkBeast();
+          if (k === "core") checkCore();
+        });
+      });
+      document.querySelectorAll("button[data-reveal]").forEach((btn) => {
+        btn.addEventListener("click", () => reveal(btn.dataset.reveal));
+      });
+    }
+
+    async function boot() {
+      try {
+        await loadData();
+      } catch (err) {
+        console.error(err);
+        setStatus("資料載入失敗，請確認 ./data/*.json 可讀取。", true);
+        return;
+      }
+      initActions();
+      document.getElementById("dtInput").value = getTaipeiNowString();
+      document.getElementById("linesInput").value = "7,8,9,6,7,8";
+      generateQuestion();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
