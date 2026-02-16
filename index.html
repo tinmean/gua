@@ -387,10 +387,15 @@
         if (window.Solar && window.Solar.fromDate) {
           const solar = window.Solar.fromDate(dateUtc);
           const lunar = solar.getLunar();
-          const year = lunar.getYearInGanZhi ? lunar.getYearInGanZhi() : "";
-          const month = lunar.getMonthInGanZhi ? lunar.getMonthInGanZhi() : "";
+          // Prefer LiChun/exact pillars for Wen Wang / Bazi usage.
+          const year = lunar.getYearInGanZhiExact ? lunar.getYearInGanZhiExact() :
+            (lunar.getYearInGanZhiByLiChun ? lunar.getYearInGanZhiByLiChun() :
+            (lunar.getYearInGanZhi ? lunar.getYearInGanZhi() : ""));
+          const month = lunar.getMonthInGanZhiExact ? lunar.getMonthInGanZhiExact() :
+            (lunar.getMonthInGanZhi ? lunar.getMonthInGanZhi() : "");
           const day = lunar.getDayInGanZhiExact ? lunar.getDayInGanZhiExact() : (lunar.getDayInGanZhi ? lunar.getDayInGanZhi() : "");
-          const time = lunar.getTimeInGanZhi ? lunar.getTimeInGanZhi() : "";
+          const time = lunar.getTimeInGanZhiExact ? lunar.getTimeInGanZhiExact() :
+            (lunar.getTimeInGanZhi ? lunar.getTimeInGanZhi() : "");
           if (day && day.length === 2) {
             return { year, month, day, hour: time || hourGanzhiFromDayStem(day[0], hourBranchByHour(getTaipeiHour(dateUtc))) };
           }
