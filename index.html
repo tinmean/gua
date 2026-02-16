@@ -128,6 +128,25 @@
       margin-top: 12px;
     }
     .actions button { width: auto; min-width: 170px; }
+    .share-box {
+      margin-top: 10px;
+      border: 1px solid #d8cfb8;
+      border-radius: 10px;
+      padding: 8px;
+      background: #fffdf8;
+    }
+    .share-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .share-row input {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      background: #fff;
+    }
+    .share-row button { width: auto; min-width: 120px; }
     .guide {
       border: 1px solid #dec38d;
       border-radius: 12px;
@@ -318,6 +337,13 @@
             <button id="btnCalc" type="button">排盤</button>
             <button id="btnDownload" type="button">下載盤面 PNG</button>
           </div>
+          <div class="share-box">
+            <div class="muted">重現連結（客戶貼給你即可重現同一卦）</div>
+            <div class="share-row">
+              <input id="shareLink" type="text" readonly />
+              <button id="btnCopyShare" type="button" class="secondary">複製重現連結</button>
+            </div>
+          </div>
           <div class="muted" id="status"></div>
         </div>
       </div>
@@ -349,6 +375,7 @@
       current: null
     };
     const GUIDE_KEY = "liuyao_guide_dismissed_v1";
+    const SHARE_ORIGIN = "https://gua.kfacehand.com";
 
     function pad2(n) { return String(n).padStart(2, "0"); }
 
@@ -757,6 +784,24 @@
       location.hash = hash.toString();
     }
 
+    function buildShareUrlFromForm() {
+      const linesText = document.getElementById("linesInput").value.trim();
+      const dtText = document.getElementById("dtInput").value.trim();
+      const mode = document.getElementById("displayMode").value;
+      const shenshaBasis = document.getElementById("shenshaBasis").value;
+      const hash = new URLSearchParams();
+      hash.set("lines", linesText);
+      hash.set("dt", dtText);
+      hash.set("mode", mode);
+      hash.set("sb", shenshaBasis);
+      const useOrigin = location.origin && /^https?:\/\//.test(location.origin) ? location.origin : SHARE_ORIGIN;
+      return `${useOrigin}${location.pathname}#${hash.toString()}`;
+    }
+
+    function updateShareLink() {
+      document.getElementById("shareLink").value = buildShareUrlFromForm();
+    }
+
     function readHashToForm() {
       const raw = location.hash.replace(/^#/, "");
       const p = new URLSearchParams(raw);
@@ -785,6 +830,7 @@
       state.current = res;
       renderResult(res, mode);
       syncHash(lines, dtText, mode, shenshaBasis);
+      updateShareLink();
       setStatus("排盤完成。", false);
       renderDevPanel();
     }
@@ -877,10 +923,25 @@
       });
       document.getElementById("btnCalc").addEventListener("click", runCalc);
       document.getElementById("btnDownload").addEventListener("click", downloadPng);
+      document.getElementById("btnCopyShare").addEventListener("click", async () => {
+        try {
+          updateShareLink();
+          const text = document.getElementById("shareLink").value;
+          await navigator.clipboard.writeText(text);
+          setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+        } catch (err) {
+          setStatus("複製失敗，請手動複製下方連結欄位。", true);
+        }
+      });
       document.getElementById("displayMode").addEventListener("change", () => state.current && renderResult(state.current, document.getElementById("displayMode").value));
       document.getElementById("shenshaBasis").addEventListener("change", () => state.current && runCalc());
+      document.getElementById("dtInput").addEventListener("input", updateShareLink);
+      document.getElementById("linesInput").addEventListener("input", updateShareLink);
+      document.getElementById("displayMode").addEventListener("change", updateShareLink);
+      document.getElementById("shenshaBasis").addEventListener("change", updateShareLink);
       window.addEventListener("hashchange", () => {
         readHashToForm();
+        updateShareLink();
         runCalc();
       });
     }
@@ -907,6 +968,7 @@
 
       if (!document.getElementById("dtInput").value) document.getElementById("dtInput").value = getTaipeiNowString();
       if (!document.getElementById("linesInput").value) document.getElementById("linesInput").value = "7,8,9,6,7,8";
+      updateShareLink();
       runCalc();
     }
 
