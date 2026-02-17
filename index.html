@@ -128,12 +128,24 @@
       margin-top: 12px;
     }
     .actions button { width: auto; min-width: 170px; }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-row button { width: auto; min-width: 140px; }
     .share-box {
-      margin-top: 10px;
+      margin: 8px 0 12px;
       border: 1px solid #d8cfb8;
       border-radius: 10px;
       padding: 8px;
       background: #fffdf8;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .share-box.active {
+      border-color: #c5851c;
+      background: linear-gradient(180deg, #fff7e6, #fffdf8);
+      box-shadow: 0 0 0 3px rgba(240, 180, 78, 0.2);
     }
     .share-row {
       display: grid;
@@ -172,6 +184,15 @@
       padding: 6px 10px;
       font-size: 12px;
     }
+    .coin-panel {
+      border: 1px dashed #d5c9a8;
+      border-radius: 10px;
+      padding: 8px;
+      margin-top: 8px;
+      background: #fffef9;
+      display: none;
+    }
+    .coin-panel.show { display: block; }
 
     .card {
       background: #fff;
@@ -250,6 +271,33 @@
       font-weight: 800;
       margin-right: 4px;
     }
+    .fushen { color: #6b3e94; font-weight: 700; }
+    .desktop-table { display: block; }
+    .mobile-rows { display: none; }
+    .line-card {
+      border: 1px solid #ddd3bc;
+      border-radius: 10px;
+      background: #fff;
+      padding: 9px;
+    }
+    .line-card.moving-row {
+      background: linear-gradient(90deg, rgba(255, 227, 178, 0.45), rgba(255, 246, 223, 0.45));
+    }
+    .line-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .line-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 8px;
+      font-size: 13px;
+    }
+    .line-card-grid .full { grid-column: 1 / -1; }
+    .mobile-label { color: #7a6845; }
 
     .simple .detail-only { display: none; }
 
@@ -257,9 +305,19 @@
     #devPanel.active { display: block; }
 
     @media (max-width: 980px) {
+      body { padding: 10px; }
+      .panel { padding: 12px; margin-bottom: 10px; }
+      h1 { font-size: 24px; }
       .col-3, .col-4, .col-6, .col-8 { grid-column: span 12; }
+      .meta-grid { grid-template-columns: 1fr; }
       .hex-grid { grid-template-columns: 1fr; }
       .coin-grid { grid-template-columns: 52px 1fr 1fr 1fr 52px; }
+      .actions button { width: 100%; min-width: 0; }
+      .btn-row button { width: 100%; min-width: 0; }
+      .share-row { grid-template-columns: 1fr; }
+      .share-row button { width: 100%; }
+      .desktop-table { display: none; }
+      .mobile-rows { display: grid; gap: 8px; }
       .guide { align-items: flex-start; flex-direction: column; }
     }
 
@@ -289,16 +347,30 @@
       <div class="guide" id="guidePanel">
         <div class="guide-steps">
           <span><strong>新手先這樣做：</strong></span>
-          <span>1. 按「隨機擲六爻（銅錢）」</span>
-          <span>2. 按「將銅錢結果帶入指定六爻」</span>
-          <span>3. 按「排盤」</span>
+          <span>1. 先按「隨機擲六爻」</span>
+          <span>2. 再按「排盤」</span>
+          <span>3. 排盤後可複製重現連結</span>
         </div>
         <button type="button" class="secondary" id="btnHideGuide">知道了</button>
+      </div>
+      <div class="share-box" id="shareBox">
+        <div class="muted">重現連結（客戶貼給你即可重現同一卦）</div>
+        <div class="share-row">
+          <input id="shareLink" type="text" readonly />
+          <button id="btnCopyShare" type="button" class="secondary">複製重現連結</button>
+        </div>
       </div>
       <div class="grid">
         <div class="col-4">
           <label for="dtInput">起卦時間（台北，YYYY-MM-DD HH:mm）</label>
           <input id="dtInput" type="text" placeholder="2026-02-16 14:30" />
+        </div>
+        <div class="col-4">
+          <label>快速起卦</label>
+          <div class="btn-row">
+            <button id="btnRandomCoins" type="button" class="primary-action">先按我：隨機擲六爻</button>
+            <button id="btnCalc" type="button">排盤</button>
+          </div>
         </div>
         <div class="col-4">
           <label for="linesInput">指定六爻（下→上，逗號分隔 6/7/8/9）</label>
@@ -320,28 +392,22 @@
         </div>
 
         <div class="col-12">
-          <label>銅錢起卦（每爻三枚：頭=3、尾=2；由下到上）</label>
-          <div class="coin-grid">
-            <strong>爻位</strong><strong>第1枚</strong><strong>第2枚</strong><strong>第3枚</strong><strong>合計</strong>
-            <span>1</span><select id="c1_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum1">9</strong>
-            <span>2</span><select id="c2_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum2">9</strong>
-            <span>3</span><select id="c3_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum3">9</strong>
-            <span>4</span><select id="c4_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum4">9</strong>
-            <span>5</span><select id="c5_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum5">9</strong>
-            <span>6</span><select id="c6_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum6">9</strong>
-          </div>
           <div class="actions">
-            <button id="btnRandomCoins" type="button" class="primary-action">先按我：隨機擲六爻（銅錢）</button>
+            <button id="btnToggleCoins" type="button" class="secondary">顯示銅錢取卦細節</button>
             <button id="btnUseCoins" type="button" class="secondary">將銅錢結果帶入指定六爻</button>
             <button id="btnNow" type="button" class="secondary">時間設為現在（台北）</button>
-            <button id="btnCalc" type="button">排盤</button>
             <button id="btnDownload" type="button">下載盤面 PNG</button>
           </div>
-          <div class="share-box">
-            <div class="muted">重現連結（客戶貼給你即可重現同一卦）</div>
-            <div class="share-row">
-              <input id="shareLink" type="text" readonly />
-              <button id="btnCopyShare" type="button" class="secondary">複製重現連結</button>
+          <div class="coin-panel" id="coinPanel">
+            <label>銅錢起卦（每爻三枚：頭=3、尾=2；由下到上）</label>
+            <div class="coin-grid">
+              <strong>爻位</strong><strong>第1枚</strong><strong>第2枚</strong><strong>第3枚</strong><strong>合計</strong>
+              <span>1</span><select id="c1_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c1_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum1">9</strong>
+              <span>2</span><select id="c2_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c2_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum2">9</strong>
+              <span>3</span><select id="c3_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c3_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum3">9</strong>
+              <span>4</span><select id="c4_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c4_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum4">9</strong>
+              <span>5</span><select id="c5_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c5_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum5">9</strong>
+              <span>6</span><select id="c6_1"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_2"><option value="3">頭</option><option value="2">尾</option></select><select id="c6_3"><option value="3">頭</option><option value="2">尾</option></select><strong id="sum6">9</strong>
             </div>
           </div>
           <div class="muted" id="status"></div>
@@ -559,6 +625,44 @@
       return "?";
     }
 
+    function getHexMetaById(id) {
+      const hex = state.hexById.get(Number(id));
+      if (!hex) return null;
+      return {
+        id: hex.id,
+        name: hex.name,
+        upper: state.rules.trigram_meta[hex.upper_trigram],
+        lower: state.rules.trigram_meta[hex.lower_trigram]
+      };
+    }
+
+    function computeFushen(mainHex, palaceInfo, palaceElement, mainLiuqin) {
+      if (!palaceInfo || !palaceInfo.palace_key) return {};
+      const seq = state.rules.palace_hex_sequence[palaceInfo.palace_key] || [];
+      const pure = seq.find((x) => x.type === "本宮") || seq[0];
+      if (!pure || !pure.id) return {};
+      const pureHex = getHexMetaById(pure.id);
+      if (!pureHex) return {};
+      const pureNajia = computeNajia(pureHex);
+      const pureLiuqin = pureNajia.map((x) => relationLiuqin(palaceElement, x.element));
+      const targets = ["父母", "兄弟", "子孫", "妻財", "官鬼"];
+      const missing = targets.filter((k) => !mainLiuqin.includes(k));
+      const missingSet = new Set(missing);
+      const assigned = new Set();
+      const out = {};
+      for (let i = 0; i < 6; i++) {
+        const k = pureLiuqin[i];
+        if (missingSet.has(k) && !assigned.has(k)) {
+          out[i + 1] = {
+            liuqin: k,
+            najia: `${pureNajia[i].branch}${pureNajia[i].element}`
+          };
+          assigned.add(k);
+        }
+      }
+      return out;
+    }
+
     function lineText(bit) {
       return bit ? "──────" : "──  ──";
     }
@@ -616,6 +720,8 @@
       const taohua = groupValueByBranch(basisBranch, state.rules.shensha.taohua_by_branch_group);
 
       const rows = [];
+      const mainLiuqinList = najia.map((n) => relationLiuqin(palaceElement, n.element));
+      const fushenByLine = computeFushen(mainHex, palaceInfo, palaceElement, mainLiuqinList);
       for (let line = 6; line >= 1; line--) {
         const i = line - 1;
         const bit = (mainBits >> i) & 1;
@@ -623,11 +729,12 @@
         rows.push({
           line,
           beast: sixBeasts[i],
-          mainLiuqin: relationLiuqin(palaceElement, najia[i].element),
+          mainLiuqin: mainLiuqinList[i],
           mainNajia: `${najia[i].branch}${najia[i].element}`,
           // Traditional setup: changed-line liuqin is still based on main-hex palace element.
           chgLiuqin: relationLiuqin(palaceElement, chgNajia[i].element),
           chgNajia: `${chgNajia[i].branch}${chgNajia[i].element}`,
+          fushen: fushenByLine[line] || null,
           shi: line === shi,
           ying: line === ying,
           guashen: line === guashenLine,
@@ -675,6 +782,7 @@
           <td>${r.beast}</td>
           <td>${r.mainLiuqin}</td>
           <td>${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
+          <td>${r.fushen ? `<span class="fushen">${r.fushen.liuqin} ${r.fushen.najia}</span>` : "-"}</td>
           <td class="chg-cell">${r.chgLiuqin}</td>
           <td class="chg-cell">${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</td>
           <td>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</td>
@@ -682,6 +790,22 @@
           <td class="${chgLineClass} chg-cell">${r.isMoving ? '<span class="move-arrow">→</span>' : ''}${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}</td>
         </tr>`;
       }).join("");
+
+      const mobileRowsHtml = res.rows.map((r) => `
+        <div class="line-card ${r.isMoving ? "moving-row" : ""}">
+          <div class="line-card-head">
+            <span>第${r.line}爻 ${r.isMoving ? '<span class="moving">動</span>' : ''}</span>
+            <span>${r.beast}</span>
+          </div>
+          <div class="line-card-grid">
+            <div><span class="mobile-label">本卦：</span>${r.mainLiuqin} ${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</div>
+            <div><span class="mobile-label">之卦：</span>${r.chgLiuqin} ${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</div>
+            <div class="full"><span class="mobile-label">伏神：</span>${r.fushen ? `<span class="fushen">${r.fushen.liuqin} ${r.fushen.najia}</span>` : "無"}</div>
+            <div><span class="mobile-label">標記：</span>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</div>
+            <div><span class="mobile-label">本→之：</span><span class="${r.lineText.includes("  ") ? "line-yin" : "line-yang"}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ""}</span> ${r.isMoving ? '<span class="move-arrow">→</span>' : ''} <span class="${r.chgLineText.includes("  ") ? "line-yin" : "line-yang"}">${r.chgLineText}</span></div>
+          </div>
+        </div>
+      `).join("");
 
       resultEl.className = mode === "simple" ? "simple" : "";
       resultEl.innerHTML = `
@@ -712,7 +836,7 @@
           <span class="tag">卦身</span>${res.guashenBranch}（第${res.guashenLine}爻）
         </div>
 
-        <div class="table-wrap">
+        <div class="table-wrap desktop-table">
         <table>
           <thead>
             <tr>
@@ -720,6 +844,7 @@
               <th>六獸</th>
               <th>本卦六親</th>
               <th>本卦納甲</th>
+              <th>伏神</th>
               <th>之卦六親</th>
               <th>之卦納甲</th>
               <th>世應/卦身</th>
@@ -730,6 +855,7 @@
           <tbody>${rowsHtml}</tbody>
         </table>
         </div>
+        <div class="mobile-rows">${mobileRowsHtml}</div>
       `;
     }
 
@@ -802,6 +928,27 @@
       document.getElementById("shareLink").value = buildShareUrlFromForm();
     }
 
+    function setShareHighlight(on) {
+      document.getElementById("shareBox").classList.toggle("active", !!on);
+    }
+
+    function legacyCopyText(text) {
+      const input = document.getElementById("shareLink");
+      input.removeAttribute("readonly");
+      input.value = text;
+      input.focus();
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (_) {
+        ok = false;
+      }
+      input.setAttribute("readonly", "readonly");
+      return ok;
+    }
+
     function readHashToForm() {
       const raw = location.hash.replace(/^#/, "");
       const p = new URLSearchParams(raw);
@@ -831,6 +978,7 @@
       renderResult(res, mode);
       syncHash(lines, dtText, mode, shenshaBasis);
       updateShareLink();
+      setShareHighlight(true);
       setStatus("排盤完成。", false);
       renderDevPanel();
     }
@@ -923,14 +1071,37 @@
       });
       document.getElementById("btnCalc").addEventListener("click", runCalc);
       document.getElementById("btnDownload").addEventListener("click", downloadPng);
+      document.getElementById("btnToggleCoins").addEventListener("click", () => {
+        const panel = document.getElementById("coinPanel");
+        const show = !panel.classList.contains("show");
+        panel.classList.toggle("show", show);
+        document.getElementById("btnToggleCoins").textContent = show ? "隱藏銅錢取卦細節" : "顯示銅錢取卦細節";
+      });
       document.getElementById("btnCopyShare").addEventListener("click", async () => {
+        updateShareLink();
+        const text = document.getElementById("shareLink").value;
         try {
-          updateShareLink();
-          const text = document.getElementById("shareLink").value;
-          await navigator.clipboard.writeText(text);
-          setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            setShareHighlight(false);
+            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+            return;
+          }
+          const ok = legacyCopyText(text);
+          if (ok) {
+            setShareHighlight(false);
+            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          } else {
+            setStatus("自動複製失敗：已選取連結，請長按後選「複製」。", true);
+          }
         } catch (err) {
-          setStatus("複製失敗，請手動複製下方連結欄位。", true);
+          const ok = legacyCopyText(text);
+          if (ok) {
+            setShareHighlight(false);
+            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          } else {
+            setStatus("複製失敗：已選取連結，請長按後選「複製」。", true);
+          }
         }
       });
       document.getElementById("displayMode").addEventListener("change", () => state.current && renderResult(state.current, document.getElementById("displayMode").value));
