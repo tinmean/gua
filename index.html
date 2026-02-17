@@ -901,6 +901,23 @@
       return lines;
     }
 
+    function applyLinesToCoinPanel(lines) {
+      // 6=2+2+2, 7=3+2+2, 8=3+3+2, 9=3+3+3
+      const presets = {
+        6: [2,2,2],
+        7: [3,2,2],
+        8: [3,3,2],
+        9: [3,3,3]
+      };
+      for (let i = 1; i <= 6; i++) {
+        const p = presets[lines[i - 1]] || presets[7];
+        for (let j = 1; j <= 3; j++) {
+          document.getElementById(`c${i}_${j}`).value = String(p[j - 1]);
+        }
+      }
+      updateCoinSums();
+    }
+
     function syncHash(lines, dtText, mode, shenshaBasis) {
       const hash = new URLSearchParams();
       hash.set("lines", lines.join(","));
@@ -1058,12 +1075,19 @@
         }
       }
       document.getElementById("btnRandomCoins").addEventListener("click", () => {
-        setCoinRandom();
-        setStatus("已隨機擲銅錢，可按「將銅錢結果帶入指定六爻」。", false);
+        const randomLines = [];
+        for (let i = 0; i < 6; i++) {
+          randomLines.push([6,7,8,9][Math.floor(Math.random() * 4)]);
+        }
+        document.getElementById("linesInput").value = randomLines.join(",");
+        applyLinesToCoinPanel(randomLines);
+        updateShareLink();
+        setStatus("已隨機產生六爻，可直接按「排盤」。", false);
       });
       document.getElementById("btnUseCoins").addEventListener("click", () => {
         const lines = coinSumsToLines();
         document.getElementById("linesInput").value = lines.join(",");
+        updateShareLink();
         setStatus("已帶入銅錢結果。", false);
       });
       document.getElementById("btnNow").addEventListener("click", () => {
