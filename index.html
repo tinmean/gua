@@ -249,6 +249,13 @@
     .shi { color: #1d5b41; font-weight: 700; }
     .ying { color: #7b4e00; font-weight: 700; }
     .guashen { color: #2c5a9f; font-weight: 700; }
+    .beast-tag {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 999px;
+      border: 1px solid #d8cfb8;
+      background: #fff;
+    }
 
     .line-yang, .line-yin {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -300,26 +307,23 @@
     .mobile-label { color: #7a6845; }
 
     .simple .detail-only { display: none; }
-    .simple .desktop-table,
-    .simple .mobile-rows { display: none !important; }
-    .simple-only { display: none; }
-    .simple .simple-only { display: block; }
-    .simple-moves {
-      border: 1px solid #ddd3bc;
-      border-radius: 10px;
-      background: #fffef9;
-      overflow: hidden;
+    .simple .beast-tag {
+      border-color: #baa576;
+      background: #fff6e5;
+      font-weight: 700;
     }
-    .simple-move-row {
-      display: grid;
-      grid-template-columns: 90px 1fr 30px 1fr;
-      gap: 8px;
-      align-items: center;
-      padding: 8px 10px;
-      border-bottom: 1px solid #eee3cb;
-      font-size: 14px;
+    .simple .shi,
+    .simple .ying,
+    .simple .empty {
+      display: inline-block;
+      padding: 0 6px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      margin-left: 3px;
     }
-    .simple-move-row:last-child { border-bottom: 0; }
+    .simple .shi { background: #e7f6ed; border-color: #9ac8ac; }
+    .simple .ying { background: #fff1dd; border-color: #d9b67b; }
+    .simple .empty { background: #fdeaea; border-color: #d8a2a2; }
 
     #devPanel { display: none; }
     #devPanel.active { display: block; }
@@ -338,7 +342,6 @@
       .share-row button { width: 100%; }
       .desktop-table { display: none; }
       .mobile-rows { display: grid; gap: 8px; }
-      .simple-move-row { grid-template-columns: 1fr; gap: 3px; }
       .guide { align-items: flex-start; flex-direction: column; }
     }
 
@@ -797,19 +800,20 @@
       const pInfo = res.palaceInfo || { palace: "?", type: "?" };
 
       const rowsHtml = res.rows.map((r) => {
+        const showChg = !isSimple || r.isMoving;
         const lineClass = r.lineText.includes("  ") ? "line-yin" : "line-yang";
         const chgLineClass = r.chgLineText.includes("  ") ? "line-yin" : "line-yang";
         return `<tr class="${r.isMoving ? "moving-row" : ""}">
           <td>${r.line}${r.isMoving ? ' <span class="moving">動</span>' : ''}</td>
-          <td>${r.beast}</td>
+          <td><span class="beast-tag">${r.beast}</span></td>
           <td>${r.mainLiuqin}</td>
           <td>${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</td>
           <td>${r.fushen ? `<span class="fushen">${r.fushen.liuqin} ${r.fushen.najia}</span>` : "-"}</td>
-          <td class="chg-cell">${r.chgLiuqin}</td>
-          <td class="chg-cell">${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</td>
+          <td class="chg-cell">${showChg ? r.chgLiuqin : "-"}</td>
+          <td class="chg-cell">${showChg ? `${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}` : "-"}</td>
           <td>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</td>
           <td class="${lineClass}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ''}</td>
-          <td class="${chgLineClass} chg-cell">${r.isMoving ? '<span class="move-arrow">→</span>' : ''}${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}</td>
+          <td class="${chgLineClass} chg-cell">${showChg ? `${r.isMoving ? '<span class="move-arrow">→</span>' : ''}${r.chgLineText}${r.isMoving ? ' <span class="moving">變</span>' : ''}` : "-"}</td>
         </tr>`;
       }).join("");
 
@@ -817,26 +821,17 @@
         <div class="line-card ${r.isMoving ? "moving-row" : ""}">
           <div class="line-card-head">
             <span>第${r.line}爻 ${r.isMoving ? '<span class="moving">動</span>' : ''}</span>
-            <span>${r.beast}</span>
+            <span class="beast-tag">${r.beast}</span>
           </div>
           <div class="line-card-grid">
             <div><span class="mobile-label">本卦：</span>${r.mainLiuqin} ${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</div>
-            <div><span class="mobile-label">之卦：</span>${r.chgLiuqin} ${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</div>
+            <div><span class="mobile-label">之卦：</span>${(!isSimple || r.isMoving) ? `${r.chgLiuqin} ${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}` : "-"}</div>
             <div class="full"><span class="mobile-label">伏神：</span>${r.fushen ? `<span class="fushen">${r.fushen.liuqin} ${r.fushen.najia}</span>` : "無"}</div>
             <div><span class="mobile-label">標記：</span>${r.shi ? '<span class="shi">世</span>' : ''}${r.ying ? '<span class="ying">應</span>' : ''}${r.guashen ? '<span class="guashen">卦身</span>' : ''}</div>
-            <div><span class="mobile-label">本→之：</span><span class="${r.lineText.includes("  ") ? "line-yin" : "line-yang"}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ""}</span> ${r.isMoving ? '<span class="move-arrow">→</span>' : ''} <span class="${r.chgLineText.includes("  ") ? "line-yin" : "line-yang"}">${r.chgLineText}</span></div>
+            <div><span class="mobile-label">本→之：</span><span class="${r.lineText.includes("  ") ? "line-yin" : "line-yang"}">${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ""}</span> ${(!isSimple || r.isMoving) ? `${r.isMoving ? '<span class="move-arrow">→</span>' : ''} <span class="${r.chgLineText.includes("  ") ? "line-yin" : "line-yang"}">${r.chgLineText}</span>` : ''}</div>
           </div>
         </div>
       `).join("");
-      const simpleMoves = res.rows.filter((r) => r.isMoving);
-      const simpleMovesHtml = simpleMoves.length ? simpleMoves.map((r) => `
-        <div class="simple-move-row">
-          <div><span class="tag">第${r.line}爻</span></div>
-          <div>${r.mainLiuqin} ${r.mainNajia}${r.empty ? '<span class="empty"> 空</span>' : ''}</div>
-          <div class="move-arrow">→</div>
-          <div>${r.chgLiuqin} ${r.chgNajia}${r.chgEmpty ? '<span class="empty"> 空</span>' : ''}</div>
-        </div>
-      `).join("") : `<div class="simple-move-row"><div>本卦無動爻</div><div></div><div></div><div></div></div>`;
 
       resultEl.className = isSimple ? "simple" : "";
       resultEl.innerHTML = `
@@ -866,11 +861,6 @@
           <span class="tag">世/應</span>世在第${res.shi}爻，應在第${res.ying}爻
           <span class="tag">卦身</span>${res.guashenBranch}（第${res.guashenLine}爻）
         </div>
-        <div class="simple-only" style="margin-bottom:8px;">
-          <span class="tag">簡潔模式</span>僅顯示動爻到之卦的六親五行
-          <div class="simple-moves">${simpleMovesHtml}</div>
-        </div>
-
         <div class="table-wrap desktop-table">
         <table>
           <thead>
