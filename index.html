@@ -305,6 +305,22 @@
     }
     .line-card-grid .full { grid-column: 1 / -1; }
     .mobile-label { color: #7a6845; }
+    .shot-toggle {
+      position: fixed;
+      right: 12px;
+      bottom: 14px;
+      z-index: 50;
+      width: auto;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid #c5851c;
+      background: linear-gradient(180deg, #ffd585, #f0b44e);
+      color: #3a2600;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(90, 57, 9, 0.22);
+      display: none;
+    }
+    .mobile-shot .shot-toggle { display: inline-block; }
 
     .simple .detail-only { display: none; }
     .simple .beast-tag {
@@ -343,6 +359,45 @@
       .desktop-table { display: none; }
       .mobile-rows { display: grid; gap: 8px; }
       .guide { align-items: flex-start; flex-direction: column; }
+      body.mobile-shot {
+        padding: 0;
+        background: #fff;
+      }
+      body.mobile-shot .wrap {
+        max-width: 100%;
+        margin: 0;
+      }
+      body.mobile-shot .panel:not(.print-keep) {
+        display: none !important;
+      }
+      body.mobile-shot .panel.print-keep {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        padding: 8px;
+        background: #fff;
+      }
+      body.mobile-shot .card {
+        border-radius: 10px;
+        box-shadow: none;
+        border-color: #d7ccb2;
+        padding: 12px;
+      }
+      body.mobile-shot .hex-grid {
+        display: none;
+      }
+      body.mobile-shot .meta-grid {
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+      body.mobile-shot .line-card {
+        border-radius: 8px;
+        padding: 8px;
+      }
+      body.mobile-shot .line-card-grid {
+        gap: 2px 6px;
+      }
     }
 
     @media print {
@@ -420,6 +475,7 @@
             <button id="btnToggleCoins" type="button" class="secondary">顯示銅錢取卦細節</button>
             <button id="btnUseCoins" type="button" class="secondary">將銅錢結果帶入指定六爻</button>
             <button id="btnNow" type="button" class="secondary">時間設為現在（台北）</button>
+            <button id="btnMobileShot" type="button" class="secondary">手機截圖模式</button>
             <button id="btnDownload" type="button">下載盤面 PNG</button>
           </div>
           <div class="coin-panel" id="coinPanel">
@@ -451,6 +507,7 @@
       <div id="devCases"></div>
     </section>
   </div>
+  <button id="btnExitMobileShot" class="shot-toggle" type="button">離開截圖模式</button>
 
   <script>
     const TZ = "Asia/Taipei";
@@ -900,6 +957,20 @@
       });
     }
 
+    function setMobileShotMode(on) {
+      const isMobile = window.matchMedia("(max-width: 980px)").matches;
+      if (!isMobile && on) {
+        setStatus("手機截圖模式建議在手機尺寸使用。", false);
+      }
+      document.body.classList.toggle("mobile-shot", !!on);
+      if (on) {
+        document.getElementById("displayMode").value = "simple";
+        if (state.current) renderResult(state.current, "simple");
+      } else if (state.current) {
+        renderResult(state.current, document.getElementById("displayMode").value);
+      }
+    }
+
     function updateCoinSums() {
       for (let i = 1; i <= 6; i++) {
         const a = Number(document.getElementById(`c${i}_1`).value);
@@ -1120,6 +1191,14 @@
       });
       document.getElementById("btnCalc").addEventListener("click", runCalc);
       document.getElementById("btnDownload").addEventListener("click", downloadPng);
+      document.getElementById("btnMobileShot").addEventListener("click", () => {
+        setMobileShotMode(true);
+        setStatus("已進入手機截圖模式：可直接用手機原生截圖。", false);
+      });
+      document.getElementById("btnExitMobileShot").addEventListener("click", () => {
+        setMobileShotMode(false);
+        setStatus("已離開手機截圖模式。", false);
+      });
       document.getElementById("btnToggleCoins").addEventListener("click", () => {
         const panel = document.getElementById("coinPanel");
         const show = !panel.classList.contains("show");
