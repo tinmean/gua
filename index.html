@@ -475,6 +475,7 @@
       </div>
       <div class="share-box" id="shareBox">
         <div class="muted">重現連結（客戶貼給你即可重現同一卦）</div>
+        <div class="muted" id="shareHint">排盤後可按右側按鈕複製網址分享。</div>
         <div class="share-row">
           <input id="shareLink" type="text" readonly />
           <button id="btnCopyShare" type="button" class="secondary">複製重現連結</button>
@@ -934,6 +935,7 @@
         <tr class="${r.isMoving ? "moving-row" : ""}">
           <td>${r.line}</td>
           <td>${r.beast}</td>
+          <td>${r.fushen ? `<span class="fushen">${r.fushen.liuqin}${r.fushen.najia}</span>` : "-"}</td>
           <td>${r.mainLiuqin}</td>
           <td>${r.mainNajia}${r.empty ? "<span class='empty'>空</span>" : ""}</td>
           <td class="shot-line">${r.lineText}${r.movingMark ? r.movingMark : ""}</td>
@@ -942,6 +944,8 @@
           <td class="shot-mark">${r.shi ? "世" : ""}${r.ying ? "應" : ""}${r.guashen ? "身" : ""}</td>
         </tr>
       `).join("");
+      const monthBranch = res.gz.month && res.gz.month.length >= 2 ? res.gz.month[1] : "?";
+      const shenshaText = `天乙:${res.shensha.tianyi.join("、") || "?"} 驛馬:${res.shensha.yima} 桃花:${res.shensha.taohua}`;
 
       resultEl.className = isSimple ? "simple" : "";
       resultEl.innerHTML = `
@@ -993,14 +997,15 @@
         <div class="mobile-rows">${mobileRowsHtml}</div>
         <div class="shot-compact">
           <div class="shot-head">
-            <div class="row"><span>${res.solar}</span><span>${res.gz.day || "?"}日 ${res.gz.hour || "?"}時</span></div>
+            <div class="row"><span>${res.solar}</span><span>${monthBranch}月 ${res.gz.day || "?"}日</span></div>
             <div class="row"><span>本卦 #${res.mainHex.id} ${res.mainHex.name}</span><span>之卦 #${res.chgHex.id} ${res.chgHex.name}</span></div>
             <div class="row"><span>旬空 ${res.xunkong.join("、")}</span><span>動爻 ${movingText}</span></div>
+            <div class="row"><span>神煞提醒</span><span>${shenshaText}</span></div>
           </div>
           <table class="shot-table">
             <thead>
               <tr>
-                <th>爻</th><th>獸</th><th>本親</th><th>本甲</th><th>本線</th><th>變親</th><th>變甲</th><th>記</th>
+                <th>爻</th><th>獸</th><th>伏</th><th>本親</th><th>本甲</th><th>本線</th><th>變親</th><th>變甲</th><th>記</th>
               </tr>
             </thead>
             <tbody>${shotRowsHtml}</tbody>
@@ -1111,6 +1116,8 @@
 
     function setShareHighlight(on) {
       document.getElementById("shareBox").classList.toggle("active", !!on);
+      const hint = document.getElementById("shareHint");
+      hint.textContent = on ? "已排盤，現在可複製這組網址傳給對方。" : "排盤後可按右側按鈕複製網址分享。";
     }
 
     function legacyCopyText(text) {
