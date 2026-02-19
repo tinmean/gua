@@ -79,6 +79,18 @@
     .col-12 { grid-column: span 12; }
 
     label { display: block; font-weight: 600; margin-bottom: 4px; }
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .inline-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
     input, select, button {
       width: 100%;
       border: 1px solid var(--line);
@@ -134,6 +146,41 @@
       flex-wrap: wrap;
     }
     .btn-row button { width: auto; min-width: 140px; }
+    .step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #f0b44e;
+      color: #3a2600;
+      font-size: 12px;
+      font-weight: 800;
+      margin-right: 4px;
+      border: 1px solid #c5851c;
+      vertical-align: middle;
+    }
+    .help-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      padding: 0;
+      min-width: 0;
+      font-size: 12px;
+      line-height: 1;
+    }
+    .help-pop {
+      margin-top: 6px;
+      display: none;
+      border: 1px dashed #d5c9a8;
+      border-radius: 8px;
+      background: #fffef9;
+      padding: 7px 8px;
+      font-size: 12px;
+      color: #5a4c2f;
+    }
+    .help-pop.show { display: block; }
     .share-box {
       margin: 8px 0 12px;
       border: 1px solid #d8cfb8;
@@ -355,6 +402,7 @@
       .coin-grid { grid-template-columns: 52px 1fr 1fr 1fr 52px; }
       .actions button { width: 100%; min-width: 0; }
       .btn-row button { width: 100%; min-width: 0; }
+      .inline-field { grid-template-columns: 1fr; }
       .share-row { grid-template-columns: 1fr; }
       .share-row button { width: 100%; }
       .desktop-table { display: none; }
@@ -484,18 +532,30 @@
       <div class="grid">
         <div class="col-4">
           <label for="dtInput">起卦時間（台北，YYYY-MM-DD HH:mm）</label>
-          <input id="dtInput" type="text" placeholder="2026-02-16 14:30" />
+          <div class="inline-field">
+            <input id="dtInput" type="text" placeholder="2026-02-16 14:30" />
+            <button id="btnNow" type="button" class="secondary"><span class="step">1</span>設為現在</button>
+          </div>
         </div>
         <div class="col-4">
           <label>快速起卦</label>
           <div class="btn-row">
-            <button id="btnRandomCoins" type="button" class="primary-action">先按我：隨機擲六爻</button>
-            <button id="btnCalc" type="button">排盤</button>
+            <button id="btnRandomCoins" type="button" class="primary-action"><span class="step">2</span>隨機取六爻</button>
+            <button id="btnCalc" type="button"><span class="step">3</span>排盤</button>
           </div>
         </div>
         <div class="col-4">
-          <label for="linesInput">指定六爻（下→上，逗號分隔 6/7/8/9）</label>
+          <div class="label-row">
+            <label for="linesInput" style="margin:0;">指定六爻（下→上，逗號分隔 6/7/8/9）</label>
+            <button id="btnLinesHelp" type="button" class="secondary help-btn" aria-label="六爻說明">?</button>
+          </div>
           <input id="linesInput" type="text" placeholder="7,8,9,6,7,8" />
+          <div id="linesHelp" class="help-pop">
+            6=老陰（動，變陽）<br />
+            7=少陽（不動）<br />
+            8=少陰（不動）<br />
+            9=老陽（動，變陰）
+          </div>
         </div>
         <div class="col-2">
           <label for="displayMode">顯示模式</label>
@@ -516,7 +576,6 @@
           <div class="actions">
             <button id="btnToggleCoins" type="button" class="secondary">顯示銅錢取卦細節</button>
             <button id="btnUseCoins" type="button" class="secondary">將銅錢結果帶入指定六爻</button>
-            <button id="btnNow" type="button" class="secondary">時間設為現在（台北）</button>
             <button id="btnMobileShot" type="button" class="secondary">手機截圖模式</button>
             <button id="btnDownload" type="button">下載盤面 PNG</button>
           </div>
@@ -1266,6 +1325,9 @@
       });
       document.getElementById("btnCalc").addEventListener("click", runCalc);
       document.getElementById("btnDownload").addEventListener("click", downloadPng);
+      document.getElementById("btnLinesHelp").addEventListener("click", () => {
+        document.getElementById("linesHelp").classList.toggle("show");
+      });
       document.getElementById("btnMobileShot").addEventListener("click", () => {
         setMobileShotMode(true);
         setStatus("已進入手機截圖模式：可直接用手機原生截圖。", false);
