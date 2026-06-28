@@ -624,6 +624,7 @@
     };
     const GUIDE_KEY = "liuyao_guide_dismissed_v1";
     const SHARE_ORIGIN = "https://gua.kfacehand.com";
+    const DATA_VERSION = "20260628-hexmap-fix";
 
     function pad2(n) { return String(n).padStart(2, "0"); }
 
@@ -1285,16 +1286,91 @@
       `;
     }
 
+    function normalizeHexagramData(hexData, rules) {
+      const imageToTrigram = {
+        "天": "qian", "乾": "qian",
+        "澤": "dui", "兌": "dui",
+        "火": "li", "離": "li",
+        "雷": "zhen", "震": "zhen",
+        "風": "xun", "巽": "xun",
+        "水": "kan", "坎": "kan",
+        "山": "gen", "艮": "gen",
+        "地": "kun", "坤": "kun"
+      };
+
+      return {
+        ...hexData,
+        hexagrams: hexData.hexagrams.map((hex) => {
+          const upperKey = hex.name.includes("為") ? imageToTrigram[hex.name[0]] : imageToTrigram[hex.name[0]];
+          const lowerKey = hex.name.includes("為") ? upperKey : imageToTrigram[hex.name[1]];
+          const upper = rules.trigram_meta[upperKey];
+          const lower = rules.trigram_meta[lowerKey];
+          return {
+            ...hex,
+            upper_trigram: upperKey,
+            lower_trigram: lowerKey,
+            upper_trigram_name: upper ? upper.name : hex.upper_trigram_name,
+            lower_trigram_name: lower ? lower.name : hex.lower_trigram_name
+          };
+        })
+      };
+    }
+
+    function normalizePalaceRules(rules, mapByBits) {
+      const typeMasks = rules.palace_type_masks || {
+        "本宮": 0, "一世": 1, "二世": 3, "三世": 7,
+        "四世": 15, "五世": 31, "遊魂": 23, "歸魂": 16
+      };
+      const typeOrder = ["本宮", "一世", "二世", "三世", "四世", "五世", "遊魂", "歸魂"];
+      const palaceKeys = ["qian", "dui", "li", "zhen", "xun", "kan", "gen", "kun"];
+      const palaceHex = {};
+      const shiYingByHexId = {};
+
+      palaceKeys.forEach((key) => {
+        const trigram = rules.trigram_meta[key];
+        if (!trigram) return;
+        const pureBits = trigram.bits | (trigram.bits << 3);
+        palaceHex[key] = [];
+        typeOrder.forEach((type) => {
+          const id = mapByBits.get(pureBits ^ typeMasks[type]);
+          const shiYing = rules.shi_ying_type_table[type];
+          if (!id || !shiYing) return;
+          const item = {
+            id,
+            type,
+            shi: shiYing.shi,
+            ying: shiYing.ying,
+            palace: trigram.name,
+            palace_key: key,
+            palace_element: trigram.element
+          };
+          palaceHex[key].push(item);
+          shiYingByHexId[id] = item;
+        });
+      });
+
+      rules.palace_hex_sequence = palaceHex;
+      rules.shi_ying_by_hexagram_id = shiYingByHexId;
+    }
+
     async function loadData() {
+      const dataUrl = (path) => `${path}?v=${encodeURIComponent(DATA_VERSION)}`;
       const [hexData, mappingData, rules] = await Promise.all([
-        fetch("./data/hexagrams_zh_tw.json").then((r) => r.json()),
-        fetch("./data/king_wen_mapping.json").then((r) => r.json()),
-        fetch("./data/rules.json").then((r) => r.json())
+        fetch(dataUrl("./data/hexagrams_zh_tw.json"), { cache: "no-store" }).then((r) => r.json()),
+        fetch(dataUrl("./data/king_wen_mapping.json"), { cache: "no-store" }).then((r) => r.json()),
+        fetch(dataUrl("./data/rules.json"), { cache: "no-store" }).then((r) => r.json())
       ]);
-      state.data = hexData;
       state.rules = rules;
-      mappingData.mappings.forEach((m) => state.mapByBits.set(m.bits_int, m.id));
-      hexData.hexagrams.forEach((h) => state.hexById.set(h.id, h));
+      state.data = normalizeHexagramData(hexData, rules);
+      state.mapByBits.clear();
+      state.hexById.clear();
+      state.data.hexagrams.forEach((h) => {
+        const upper = rules.trigram_meta[h.upper_trigram];
+        const lower = rules.trigram_meta[h.lower_trigram];
+        if (upper && lower) state.mapByBits.set(lower.bits | (upper.bits << 3), h.id);
+        state.hexById.set(h.id, h);
+      });
+      normalizePalaceRules(state.rules, state.mapByBits);
     }
 
     function initEvents() {
