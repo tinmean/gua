@@ -268,7 +268,7 @@
         "palace_element": "金"
       },
       {
-        "id": 16,
+        "id": 15,
         "type": "五世",
         "shi": 5,
         "ying": 2,
@@ -380,7 +380,7 @@
         "palace_element": "木"
       },
       {
-        "id": 15,
+        "id": 16,
         "type": "一世",
         "shi": 1,
         "ying": 4,
@@ -869,21 +869,21 @@
     },
     "15": {
       "id": 15,
-      "type": "一世",
-      "shi": 1,
-      "ying": 4,
-      "palace": "震",
-      "palace_key": "zhen",
-      "palace_element": "木"
-    },
-    "16": {
-      "id": 16,
       "type": "五世",
       "shi": 5,
       "ying": 2,
       "palace": "兌",
       "palace_key": "dui",
       "palace_element": "金"
+    },
+    "16": {
+      "id": 16,
+      "type": "一世",
+      "shi": 1,
+      "ying": 4,
+      "palace": "震",
+      "palace_key": "zhen",
+      "palace_element": "木"
     },
     "17": {
       "id": 17,

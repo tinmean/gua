@@ -228,19 +228,19 @@
       "id": 15,
       "key": "hex_15",
       "name": "地山謙",
-      "upper_trigram": "zhen",
-      "lower_trigram": "kun",
-      "upper_trigram_name": "震",
-      "lower_trigram_name": "坤"
+      "upper_trigram": "kun",
+      "lower_trigram": "gen",
+      "upper_trigram_name": "坤",
+      "lower_trigram_name": "艮"
     },
     {
       "id": 16,
       "key": "hex_16",
       "name": "雷地豫",
-      "upper_trigram": "kun",
-      "lower_trigram": "gen",
-      "upper_trigram_name": "坤",
-      "lower_trigram_name": "艮"
+      "upper_trigram": "zhen",
+      "lower_trigram": "kun",
+      "upper_trigram_name": "震",
+      "lower_trigram_name": "坤"
     },
     {
       "id": 17,

@@ -117,16 +117,16 @@
       "id": 15,
       "key": "hex_15",
       "name": "地山謙",
-      "bits": "000100",
-      "bits_int": 8,
+      "bits": "001000",
+      "bits_int": 4,
       "encoding": "bit0=初爻(下), bit5=上爻; 1=陽, 0=陰"
     },
     {
       "id": 16,
       "key": "hex_16",
       "name": "雷地豫",
-      "bits": "001000",
-      "bits_int": 4,
+      "bits": "000100",
+      "bits_int": 8,
       "encoding": "bit0=初爻(下), bit5=上爻; 1=陽, 0=陰"
     },
     {
