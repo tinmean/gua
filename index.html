@@ -353,22 +353,27 @@
     .line-card-grid .full { grid-column: 1 / -1; }
     .mobile-label { color: #7a6845; }
     .shot-compact { display: none; }
-    .shot-toggle {
+    .shot-actions {
       position: fixed;
+      left: 12px;
       right: 12px;
-      bottom: 14px;
+      bottom: max(12px, env(safe-area-inset-bottom));
       z-index: 50;
-      width: auto;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid #c5851c;
-      background: linear-gradient(180deg, #ffd585, #f0b44e);
-      color: #3a2600;
-      font-weight: 700;
-      box-shadow: 0 6px 18px rgba(90, 57, 9, 0.22);
       display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 7px;
+      border: 1px solid #d5c9aa;
+      border-radius: 14px;
+      background: rgba(255, 253, 247, 0.94);
+      box-shadow: 0 8px 24px rgba(66, 48, 20, 0.18);
+      backdrop-filter: blur(10px);
     }
-    .mobile-shot .shot-toggle { display: inline-block; }
+    .shot-actions button {
+      min-width: 0;
+      padding: 9px 8px;
+    }
+    .mobile-shot .shot-actions { display: grid; }
 
     .simple .detail-only { display: none; }
     .simple .beast-tag {
@@ -411,6 +416,7 @@
       body.mobile-shot {
         padding: 0;
         background: #fff;
+        min-height: 100dvh;
       }
       body.mobile-shot .wrap {
         max-width: 100%;
@@ -424,14 +430,15 @@
         border-radius: 0;
         box-shadow: none;
         margin: 0;
-        padding: 8px;
+        padding: 0 0 76px;
         background: #fff;
       }
       body.mobile-shot .card {
-        border-radius: 10px;
+        border: 0;
+        border-radius: 0;
         box-shadow: none;
-        border-color: #d7ccb2;
-        padding: 12px;
+        padding: 10px;
+        min-height: calc(100dvh - 76px);
       }
       body.mobile-shot .hex-grid {
         display: none;
@@ -446,46 +453,178 @@
       }
       body.mobile-shot .shot-compact {
         display: block;
+        max-width: 520px;
+        margin: 0 auto;
       }
       body.mobile-shot .shot-head {
         border: 1px solid #d7ccb2;
-        border-radius: 8px;
-        background: #f8f5ee;
-        padding: 6px 8px;
-        margin-bottom: 6px;
-        font-size: 12px;
-        line-height: 1.3;
+        border-radius: 12px 12px 0 0;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.9), rgba(248,243,231,.95)),
+          repeating-linear-gradient(45deg, transparent 0 8px, rgba(139,69,19,.035) 8px 9px);
+        padding: 10px 11px 9px;
+        font-size: 13px;
+        line-height: 1.35;
       }
-      body.mobile-shot .shot-head .row {
+      body.mobile-shot .shot-date-row,
+      body.mobile-shot .shot-sub-row {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: 8px;
+      }
+      body.mobile-shot .shot-date-row {
+        color: #5f553f;
+        font-size: 12px;
+      }
+      body.mobile-shot .shot-hex-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+        align-items: center;
+        gap: 5px;
+        margin: 8px 0 7px;
+      }
+      body.mobile-shot .shot-hex-name {
+        border: 1px solid #d9ceb4;
+        border-radius: 9px;
+        background: rgba(255,255,255,.82);
+        padding: 6px 7px;
+        min-width: 0;
+      }
+      body.mobile-shot .shot-hex-name small {
+        display: block;
+        color: #7a6845;
+        font-size: 10px;
+      }
+      body.mobile-shot .shot-hex-name strong {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+      }
+      body.mobile-shot .shot-main-name { border-color: #b9cdbf; }
+      body.mobile-shot .shot-changed-name { border-color: #e0bd83; }
+      body.mobile-shot .shot-big-arrow {
+        color: #b2431f;
+        text-align: center;
+        font-size: 19px;
+        font-weight: 800;
+      }
+      body.mobile-shot .shot-sub-row {
+        flex-wrap: wrap;
+        color: #574c38;
+        font-size: 12px;
+      }
+      body.mobile-shot .shot-shensha {
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px dashed #d8cdae;
+        color: #6a5835;
+        font-size: 12px;
       }
       body.mobile-shot .shot-table {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
-        font-size: 11px;
+        font-size: 14px;
       }
       body.mobile-shot .shot-table th,
       body.mobile-shot .shot-table td {
         border: 1px solid #d7ccb2;
-        padding: 3px 2px;
+        padding: 7px 3px;
         text-align: center;
         word-break: keep-all;
+        vertical-align: middle;
       }
       body.mobile-shot .shot-table th {
         background: #f2ede0;
+        color: #5f543e;
+        font-size: 11px;
+        letter-spacing: .04em;
+      }
+      body.mobile-shot .shot-table th:nth-child(1) { width: 19%; }
+      body.mobile-shot .shot-table th:nth-child(2) { width: 27%; }
+      body.mobile-shot .shot-table th:nth-child(3) { width: 21%; }
+      body.mobile-shot .shot-table th:nth-child(4) { width: 17%; }
+      body.mobile-shot .shot-table th:nth-child(5) { width: 16%; }
+      body.mobile-shot .shot-beast {
+        display: block;
+        color: #72511e;
+        font-weight: 800;
+      }
+      body.mobile-shot .shot-fushen {
+        display: block;
+        margin-top: 3px;
+        color: #6b3e94;
         font-size: 10px;
+        line-height: 1.2;
+        white-space: normal;
+      }
+      body.mobile-shot .shot-relation {
+        display: block;
+        font-weight: 700;
+      }
+      body.mobile-shot .shot-najia {
+        display: block;
+        margin-top: 2px;
+        font-size: 13px;
       }
       body.mobile-shot .shot-mark {
-        font-weight: 700;
-        color: #7b4e00;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2px;
+        margin-top: 4px;
+      }
+      body.mobile-shot .shot-mark span {
+        display: inline-block;
+        min-width: 20px;
+        padding: 0 3px;
+        border: 1px solid #cbb98f;
+        border-radius: 999px;
+        background: #fff8e8;
+        color: #72511e;
+        font-size: 10px;
+        font-weight: 800;
       }
       body.mobile-shot .shot-line {
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        letter-spacing: 0.03em;
+        letter-spacing: 0;
         white-space: nowrap;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      body.mobile-shot .shot-line-arrow {
+        color: #b2431f;
+        padding-right: 2px;
+      }
+      body.mobile-shot .shot-changed-line {
+        display: block;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0;
+        white-space: nowrap;
+      }
+      body.mobile-shot .shot-empty {
+        display: inline-block;
+        margin-left: 2px;
+        color: #a93d3d;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      body.mobile-shot .moving-row td {
+        background: linear-gradient(90deg, rgba(255, 225, 171, .62), rgba(255, 245, 220, .72));
+      }
+      body.mobile-shot .shot-caption {
+        padding: 7px 8px;
+        border: 1px solid #d7ccb2;
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+        color: #75684e;
+        text-align: center;
+        font-size: 11px;
       }
     }
 
@@ -576,7 +715,7 @@
           <div class="actions">
             <button id="btnToggleCoins" type="button" class="secondary">顯示銅錢取卦細節</button>
             <button id="btnUseCoins" type="button" class="secondary">將銅錢結果帶入指定六爻</button>
-            <button id="btnMobileShot" type="button" class="secondary">手機截圖模式</button>
+            <button id="btnMobileShot" type="button" class="secondary">全螢幕盤面（適合截圖）</button>
             <button id="btnDownload" type="button">下載盤面 PNG</button>
           </div>
           <div class="coin-panel" id="coinPanel">
@@ -604,11 +743,15 @@
 
     <section class="panel" id="devPanel">
       <h2>Dev 驗收面板（?dev=1）</h2>
-      <div class="muted">固定 5 組案例，供人工核對：本卦/之卦、世應、卦身、旬空、六獸首位。</div>
+      <div class="muted">先執行完整自檢，再列出 5 組固定案例供人工核對。</div>
+      <div id="devAudit"></div>
       <div id="devCases"></div>
     </section>
   </div>
-  <button id="btnExitMobileShot" class="shot-toggle" type="button">離開截圖模式</button>
+  <div class="shot-actions" id="shotActions">
+    <button id="btnShotCopy" class="secondary" type="button">複製重現網址</button>
+    <button id="btnExitMobileShot" type="button">返回起卦</button>
+  </div>
 
   <script>
     const TZ = "Asia/Taipei";
@@ -620,11 +763,33 @@
       rules: null,
       mapByBits: new Map(),
       hexById: new Map(),
-      current: null
+      current: null,
+      audit: null
     };
     const GUIDE_KEY = "liuyao_guide_dismissed_v1";
     const SHARE_ORIGIN = "https://gua.kfacehand.com";
-    const DATA_VERSION = "20260628-hexmap-fix";
+    const DATA_VERSION = "20260719-full-64-audit-v2";
+    const CANONICAL_HEXAGRAM_NAMES = "乾為天|坤為地|水雷屯|山水蒙|水天需|天水訟|地水師|水地比|風天小畜|天澤履|地天泰|天地否|天火同人|火天大有|地山謙|雷地豫|澤雷隨|山風蠱|地澤臨|風地觀|火雷噬嗑|山火賁|山地剝|地雷復|天雷無妄|山天大畜|山雷頤|澤風大過|坎為水|離為火|澤山咸|雷風恆|天山遯|雷天大壯|火地晉|地火明夷|風火家人|火澤睽|水山蹇|雷水解|山澤損|風雷益|澤天夬|天風姤|澤地萃|地風升|澤水困|水風井|澤火革|火風鼎|震為雷|艮為山|風山漸|雷澤歸妹|雷火豐|火山旅|巽為風|兌為澤|風水渙|水澤節|風澤中孚|雷山小過|水火既濟|火水未濟".split("|");
+    const CANONICAL_PALACES = {
+      qian: [1,44,33,12,20,23,35,14],
+      dui: [58,47,45,31,39,15,62,54],
+      li: [30,56,50,64,4,59,6,13],
+      zhen: [51,16,40,32,46,48,28,17],
+      xun: [57,9,37,42,25,21,27,18],
+      kan: [29,60,3,63,49,55,36,7],
+      gen: [52,22,26,41,38,10,61,53],
+      kun: [2,24,19,11,34,43,5,8]
+    };
+    const CANONICAL_NAJIA = {
+      qian: { inner: ["子","寅","辰"], outer: ["午","申","戌"] },
+      dui: { inner: ["巳","卯","丑"], outer: ["亥","酉","未"] },
+      li: { inner: ["卯","丑","亥"], outer: ["酉","未","巳"] },
+      zhen: { inner: ["子","寅","辰"], outer: ["午","申","戌"] },
+      xun: { inner: ["丑","亥","酉"], outer: ["未","巳","卯"] },
+      kan: { inner: ["寅","辰","午"], outer: ["申","戌","子"] },
+      gen: { inner: ["辰","午","申"], outer: ["戌","子","寅"] },
+      kun: { inner: ["未","巳","卯"], outer: ["丑","亥","酉"] }
+    };
 
     function pad2(n) { return String(n).padStart(2, "0"); }
 
@@ -993,15 +1158,24 @@
       `).join("");
       const shotRowsHtml = res.rows.map((r) => `
         <tr class="${r.isMoving ? "moving-row" : ""}">
-          <td>${r.line}</td>
-          <td>${r.beast}</td>
-          <td>${r.fushen ? `<span class="fushen">${r.fushen.liuqin}${r.fushen.najia}</span>` : "-"}</td>
-          <td>${r.mainLiuqin}</td>
-          <td>${r.mainNajia}${r.empty ? "<span class='empty'>空</span>" : ""}</td>
-          <td class="shot-line">${r.lineText}${r.movingMark ? r.movingMark : ""}</td>
-          <td>${r.isMoving ? `${r.chgLiuqin}` : "-"}</td>
-          <td>${r.isMoving ? `${r.chgNajia}${r.chgEmpty ? "<span class='empty'>空</span>" : ""}` : "-"}</td>
-          <td class="shot-mark">${r.shi ? "世" : ""}${r.ying ? "應" : ""}${r.guashen ? "身" : ""}</td>
+          <td>
+            <span class="shot-beast">${r.beast}</span>
+            ${r.fushen ? `<span class="shot-fushen">伏 ${r.fushen.liuqin}<br>${r.fushen.najia}</span>` : ""}
+          </td>
+          <td>
+            <span class="shot-relation">${r.mainLiuqin}</span>
+            <span class="shot-najia">${r.mainNajia}${r.empty ? '<span class="shot-empty">空</span>' : ""}</span>
+            ${(r.shi || r.ying || r.guashen) ? `<span class="shot-mark">${r.shi ? "<span>世</span>" : ""}${r.ying ? "<span>應</span>" : ""}${r.guashen ? "<span>身</span>" : ""}</span>` : ""}
+          </td>
+          <td class="shot-line">
+            ${r.lineText}${r.movingMark ? ` <span class="moving">${r.movingMark}</span>` : ""}
+          </td>
+          <td class="shot-changed-line">
+            ${r.isMoving ? `<span class="shot-line-arrow">→</span>${r.chgLineText}` : ""}
+          </td>
+          <td>
+            ${r.isMoving ? `<span class="shot-relation">${r.chgLiuqin}</span><span class="shot-najia">${r.chgNajia}${r.chgEmpty ? '<span class="shot-empty">空</span>' : ""}</span>` : ""}
+          </td>
         </tr>
       `).join("");
       const monthBranch = res.gz.month && res.gz.month.length >= 2 ? res.gz.month[1] : "?";
@@ -1057,19 +1231,24 @@
         <div class="mobile-rows">${mobileRowsHtml}</div>
         <div class="shot-compact">
           <div class="shot-head">
-            <div class="row"><span>${res.solar}</span><span>${monthBranch}月 ${res.gz.day || "?"}日</span></div>
-            <div class="row"><span>本卦 #${res.mainHex.id} ${res.mainHex.name}</span><span>之卦 #${res.chgHex.id} ${res.chgHex.name}</span></div>
-            <div class="row"><span>旬空 ${res.xunkong.join("、")}</span><span>動爻 ${movingText}</span></div>
-            <div class="row"><span>神煞提醒</span><span>${shenshaText}</span></div>
+            <div class="shot-date-row"><span>${res.solar.slice(0, 16)}</span><span>${monthBranch}月 ${res.gz.day || "?"}日</span></div>
+            <div class="shot-hex-row">
+              <div class="shot-hex-name shot-main-name"><small>本卦 #${res.mainHex.id}</small><strong>${htmlEscape(res.mainHex.name)}</strong></div>
+              <div class="shot-big-arrow">→</div>
+              <div class="shot-hex-name shot-changed-name"><small>之卦 #${res.chgHex.id}</small><strong>${htmlEscape(res.chgHex.name)}</strong></div>
+            </div>
+            <div class="shot-sub-row"><span>旬空：${res.xunkong.join("、")}</span><span>動爻：${movingText}</span></div>
+            <div class="shot-shensha">神煞：${shenshaText}</div>
           </div>
           <table class="shot-table">
             <thead>
               <tr>
-                <th>爻</th><th>獸</th><th>伏</th><th>本親</th><th>本甲</th><th>本線</th><th>變親</th><th>變甲</th><th>記</th>
+                <th>六獸／伏</th><th>本卦</th><th>本線</th><th>變線</th><th>變卦</th>
               </tr>
             </thead>
             <tbody>${shotRowsHtml}</tbody>
           </table>
+          <div class="shot-caption">六爻由上往下排列</div>
         </div>
       `;
     }
@@ -1094,13 +1273,15 @@
       const isMobile = window.matchMedia("(max-width: 980px)").matches;
       if (!isMobile && on) {
         setStatus("手機截圖模式建議在手機尺寸使用。", false);
+        return;
       }
       document.body.classList.toggle("mobile-shot", !!on);
       if (on) {
-        document.getElementById("displayMode").value = "simple";
-        if (state.current) renderResult(state.current, "simple");
+        if (state.current) renderResult(state.current, document.getElementById("displayMode").value);
+        requestAnimationFrame(() => window.scrollTo(0, 0));
       } else if (state.current) {
         renderResult(state.current, document.getElementById("displayMode").value);
+        requestAnimationFrame(() => document.getElementById("controls").scrollIntoView({ block: "start" }));
       }
     }
 
@@ -1197,6 +1378,33 @@
       return ok;
     }
 
+    async function copyShareLink() {
+      updateShareLink();
+      const text = document.getElementById("shareLink").value;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          setShareHighlight(false);
+          setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          return true;
+        }
+        const ok = legacyCopyText(text);
+        if (ok) {
+          setShareHighlight(false);
+          setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          return true;
+        }
+      } catch (_) {
+        if (legacyCopyText(text)) {
+          setShareHighlight(false);
+          setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
+          return true;
+        }
+      }
+      setStatus("自動複製失敗：已選取連結，請長按後選「複製」。", true);
+      return false;
+    }
+
     function readHashToForm() {
       const raw = location.hash.replace(/^#/, "");
       const p = new URLSearchParams(raw);
@@ -1210,7 +1418,7 @@
       if (sb && ["day_branch", "year_branch"].includes(sb)) document.getElementById("shenshaBasis").value = sb;
     }
 
-    function runCalc() {
+    function runCalc(options = {}) {
       const dtText = document.getElementById("dtInput").value.trim();
       const linesText = document.getElementById("linesInput").value.trim();
       const mode = document.getElementById("displayMode").value;
@@ -1229,6 +1437,9 @@
       setShareHighlight(true);
       setStatus("排盤完成。", false);
       renderDevPanel();
+      if (options.openMobileResult && window.matchMedia("(max-width: 980px)").matches) {
+        setMobileShotMode(true);
+      }
     }
 
     async function downloadPng() {
@@ -1252,6 +1463,11 @@
       const panel = document.getElementById("devPanel");
       panel.classList.toggle("active", devOn);
       if (!devOn) return;
+
+      const audit = state.audit;
+      document.getElementById("devAudit").innerHTML = audit && !audit.errors.length
+        ? `<p><strong>完整自檢通過</strong>：64卦 ${audit.hexagrams}/64、八宮 ${audit.palaceEntries}/64、六爻變化 ${audit.lineStates}/4096、旬空 ${audit.xunkong}/60。</p>`
+        : `<p class="error"><strong>完整自檢失敗</strong>：${audit ? audit.errors.map(htmlEscape).join("；") : "尚未執行"}</p>`;
 
       const cases = [
         { lines: [7,8,9,6,7,8], dt: "2026-02-16 14:30" },
@@ -1353,6 +1569,149 @@
       rules.shi_ying_by_hexagram_id = shiYingByHexId;
     }
 
+    function runFullDataAudit(mappingData) {
+      const errors = [];
+      const imageToTrigram = {
+        "天": "qian", "乾": "qian", "澤": "dui", "兌": "dui",
+        "火": "li", "離": "li", "雷": "zhen", "震": "zhen",
+        "風": "xun", "巽": "xun", "水": "kan", "坎": "kan",
+        "山": "gen", "艮": "gen", "地": "kun", "坤": "kun"
+      };
+      const mappingRows = Array.isArray(mappingData && mappingData.mappings) ? mappingData.mappings : [];
+      const mappingById = new Map(mappingRows.map((row) => [Number(row.id), row]));
+      const typeOrder = ["本宮", "一世", "二世", "三世", "四世", "五世", "遊魂", "歸魂"];
+
+      if (state.hexById.size !== 64) errors.push(`64卦資料筆數=${state.hexById.size}`);
+      if (state.mapByBits.size !== 64) errors.push(`bits mapping筆數=${state.mapByBits.size}`);
+      if (mappingRows.length !== 64) errors.push(`mapping.json筆數=${mappingRows.length}`);
+
+      CANONICAL_HEXAGRAM_NAMES.forEach((name, index) => {
+        const id = index + 1;
+        const isPure = name.includes("為");
+        const upperKey = imageToTrigram[name[0]];
+        const lowerKey = isPure ? upperKey : imageToTrigram[name[1]];
+        const upper = state.rules.trigram_meta[upperKey];
+        const lower = state.rules.trigram_meta[lowerKey];
+        if (!upper || !lower) {
+          errors.push(`#${id} ${name} 無法判定上下卦`);
+          return;
+        }
+        const expectedBits = lower.bits | (upper.bits << 3);
+        const hex = state.hexById.get(id);
+        const mapped = mappingById.get(id);
+        if (!hex || hex.name !== name || hex.upper_trigram !== upperKey || hex.lower_trigram !== lowerKey) {
+          errors.push(`#${id} ${name} 卦名或上下卦不一致`);
+        }
+        if (state.mapByBits.get(expectedBits) !== id) {
+          errors.push(`#${id} ${name} runtime bits應為${expectedBits}`);
+        }
+        const expectedBitsText = Array.from({ length: 6 }, (_, line) => (expectedBits >> line) & 1).join("");
+        if (!mapped || mapped.name !== name || Number(mapped.bits_int) !== expectedBits || mapped.bits !== expectedBitsText) {
+          errors.push(`#${id} ${name} mapping.json不一致`);
+        }
+      });
+
+      Object.entries(CANONICAL_PALACES).forEach(([palaceKey, expectedIds]) => {
+        const actual = state.rules.palace_hex_sequence[palaceKey] || [];
+        if (actual.map((item) => item.id).join(",") !== expectedIds.join(",")) {
+          errors.push(`${palaceKey}宮八卦序列不一致`);
+        }
+        expectedIds.forEach((id, index) => {
+          const actualInfo = state.rules.shi_ying_by_hexagram_id[String(id)] || state.rules.shi_ying_by_hexagram_id[id];
+          const expectedType = typeOrder[index];
+          const expectedShiYing = state.rules.shi_ying_type_table[expectedType];
+          if (!actualInfo || actualInfo.palace_key !== palaceKey || actualInfo.type !== expectedType ||
+              actualInfo.shi !== expectedShiYing.shi || actualInfo.ying !== expectedShiYing.ying) {
+            errors.push(`#${id} 八宮世應不一致`);
+          }
+        });
+      });
+
+      Object.entries(CANONICAL_NAJIA).forEach(([key, expected]) => {
+        const actual = state.rules.najia.trigram_branches[key];
+        if (!actual || actual.inner.join(",") !== expected.inner.join(",") || actual.outer.join(",") !== expected.outer.join(",")) {
+          errors.push(`${key}卦納甲地支不一致`);
+        }
+      });
+
+      const expectedBeastStarts = {
+        甲: "青龍", 乙: "青龍", 丙: "朱雀", 丁: "朱雀", 戊: "勾陳",
+        己: "騰蛇", 庚: "白虎", 辛: "白虎", 壬: "玄武", 癸: "玄武"
+      };
+      Object.entries(expectedBeastStarts).forEach(([stem, beast]) => {
+        if (state.rules.six_beasts.day_stem_start[stem] !== beast || computeSixBeasts(stem).length !== 6) {
+          errors.push(`${stem}日六獸起例不一致`);
+        }
+      });
+
+      const expectedXunkong = [["戌","亥"], ["申","酉"], ["午","未"], ["辰","巳"], ["寅","卯"], ["子","丑"]];
+      for (let index = 0; index < 60; index++) {
+        const ganzhi = STEMS[index % 10] + BRANCHES[index % 12];
+        const actual = getXunkong(ganzhi);
+        const expected = expectedXunkong[Math.floor(index / 10)];
+        if (actual.join(",") !== expected.join(",")) errors.push(`${ganzhi}旬空不一致`);
+      }
+
+      const branchElements = state.rules.najia.branch_element;
+      BRANCHES.forEach((branch) => {
+        if (!branchElements[branch]) errors.push(`${branch}缺少五行`);
+      });
+      const guashenTable = state.rules.guashen_rule.quick_table;
+      BRANCHES.forEach((branch) => {
+        if (!Number.isInteger(guashenTable[branch]) || guashenTable[branch] < 1 || guashenTable[branch] > 6) {
+          errors.push(`${branch}卦身速查不完整`);
+        }
+      });
+
+      let lineStates = 0;
+      for (let mainBits = 0; mainBits < 64; mainBits++) {
+        const mainHex = getHexMetaByBits(mainBits);
+        const palaceInfo = state.rules.shi_ying_by_hexagram_id[String(mainHex.id)] || state.rules.shi_ying_by_hexagram_id[mainHex.id];
+        const mainNajia = computeNajia(mainHex);
+        const mainLiuqin = mainNajia.map((item) => relationLiuqin(palaceInfo.palace_element, item.element));
+        if (mainNajia.length !== 6 || mainLiuqin.some((item) => item === "?")) errors.push(`${mainBits}本卦納甲六親不完整`);
+        const fushen = computeFushen(mainHex, palaceInfo, palaceInfo.palace_element, mainLiuqin);
+        const missingLiuqin = ["父母", "兄弟", "子孫", "妻財", "官鬼"].filter((item) => !mainLiuqin.includes(item));
+        missingLiuqin.forEach((item) => {
+          if (!Object.values(fushen).some((entry) => entry.liuqin === item)) errors.push(`${mainHex.name}缺少${item}伏神`);
+        });
+
+        for (let changedBits = 0; changedBits < 64; changedBits++) {
+          const lines = [];
+          for (let line = 0; line < 6; line++) {
+            const mainBit = (mainBits >> line) & 1;
+            const changedBit = (changedBits >> line) & 1;
+            lines.push(mainBit === changedBit ? (mainBit ? 7 : 8) : (mainBit ? 9 : 6));
+          }
+          if (bitsIntFromLines(lines, false) !== mainBits || bitsIntFromLines(lines, true) !== changedBits ||
+              !getHexMetaByBits(changedBits).id || computeNajia(getHexMetaByBits(changedBits)).length !== 6) {
+            errors.push(`六爻變化${mainBits}->${changedBits}不一致`);
+          }
+          lineStates++;
+        }
+      }
+
+      const shensha = state.rules.shensha;
+      STEMS.forEach((stem) => {
+        if (!Array.isArray(shensha.tianyi_gui_ren_by_day_stem[stem]) || shensha.tianyi_gui_ren_by_day_stem[stem].length !== 2) {
+          errors.push(`${stem}日天乙貴人不完整`);
+        }
+      });
+      BRANCHES.forEach((branch) => {
+        if (groupValueByBranch(branch, shensha.yima_by_branch_group) === "?" || groupValueByBranch(branch, shensha.taohua_by_branch_group) === "?") {
+          errors.push(`${branch}支神煞分組不完整`);
+        }
+      });
+
+      return {
+        hexagrams: state.hexById.size,
+        palaceEntries: Object.values(state.rules.palace_hex_sequence).flat().length,
+        lineStates,
+        xunkong: Object.keys(state.rules.xunkong.by_day_ganzhi).length,
+        errors
+      };
+    }
+
     async function loadData() {
       const dataUrl = (path) => `${path}?v=${encodeURIComponent(DATA_VERSION)}`;
       const [hexData, mappingData, rules] = await Promise.all([
@@ -1371,6 +1730,10 @@
         state.hexById.set(h.id, h);
       });
       normalizePalaceRules(state.rules, state.mapByBits);
+      state.audit = runFullDataAudit(mappingData);
+      if (state.audit.errors.length) {
+        throw new Error(`排盤資料自檢失敗：${state.audit.errors.slice(0, 8).join("；")}`);
+      }
     }
 
     function initEvents() {
@@ -1399,7 +1762,7 @@
       document.getElementById("btnNow").addEventListener("click", () => {
         document.getElementById("dtInput").value = getTaipeiNowString();
       });
-      document.getElementById("btnCalc").addEventListener("click", runCalc);
+      document.getElementById("btnCalc").addEventListener("click", () => runCalc({ openMobileResult: true }));
       document.getElementById("btnDownload").addEventListener("click", downloadPng);
       document.getElementById("btnLinesHelp").addEventListener("click", () => {
         document.getElementById("linesHelp").classList.toggle("show");
@@ -1410,41 +1773,16 @@
       });
       document.getElementById("btnExitMobileShot").addEventListener("click", () => {
         setMobileShotMode(false);
-        setStatus("已離開手機截圖模式。", false);
+        setStatus("已返回起卦輸入。", false);
       });
+      document.getElementById("btnShotCopy").addEventListener("click", copyShareLink);
       document.getElementById("btnToggleCoins").addEventListener("click", () => {
         const panel = document.getElementById("coinPanel");
         const show = !panel.classList.contains("show");
         panel.classList.toggle("show", show);
         document.getElementById("btnToggleCoins").textContent = show ? "隱藏銅錢取卦細節" : "顯示銅錢取卦細節";
       });
-      document.getElementById("btnCopyShare").addEventListener("click", async () => {
-        updateShareLink();
-        const text = document.getElementById("shareLink").value;
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-            setShareHighlight(false);
-            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
-            return;
-          }
-          const ok = legacyCopyText(text);
-          if (ok) {
-            setShareHighlight(false);
-            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
-          } else {
-            setStatus("自動複製失敗：已選取連結，請長按後選「複製」。", true);
-          }
-        } catch (err) {
-          const ok = legacyCopyText(text);
-          if (ok) {
-            setShareHighlight(false);
-            setStatus("已複製重現連結，可直接貼給客戶或轉發給你。", false);
-          } else {
-            setStatus("複製失敗：已選取連結，請長按後選「複製」。", true);
-          }
-        }
-      });
+      document.getElementById("btnCopyShare").addEventListener("click", copyShareLink);
       document.getElementById("displayMode").addEventListener("change", () => state.current && renderResult(state.current, document.getElementById("displayMode").value));
       document.getElementById("shenshaBasis").addEventListener("change", () => state.current && runCalc());
       document.getElementById("dtInput").addEventListener("input", updateShareLink);
@@ -1471,7 +1809,8 @@
       setCoinRandom();
       updateCoinSums();
 
-      if (!location.hash) {
+      const hasSharedState = Boolean(location.hash);
+      if (!hasSharedState) {
         document.getElementById("dtInput").value = getTaipeiNowString();
         document.getElementById("linesInput").value = "7,8,9,6,7,8";
       } else {
@@ -1481,7 +1820,7 @@
       if (!document.getElementById("dtInput").value) document.getElementById("dtInput").value = getTaipeiNowString();
       if (!document.getElementById("linesInput").value) document.getElementById("linesInput").value = "7,8,9,6,7,8";
       updateShareLink();
-      runCalc();
+      runCalc({ openMobileResult: hasSharedState });
     }
 
     boot();
